@@ -223,8 +223,54 @@ document.addEventListener('click', function(e) {
 }, true);
 
 const DETAIL_MAP = {
-    'agents-firms': { t: '🏭 Firms', b: '<h3>Scale</h3>20k+ firms, 72 divisions<h3>Production</h3>Capital+labor model' },
-    'agents-households': { t: '👥 Households', b: '<h3>Scale</h3>41k households<h3>Behavior</h3>Income, consumption, energy choices' },
+    'agents-firms': { 
+        t: '🏭 Firms', 
+        b: `<h3>Scale & Distribution</h3>
+            <p>20,000+ heterogeneous firms across 72 economic divisions (German WZ 2008 classification)</p>
+            <ul class="detail-list">
+                <li>3,598 active firms in current simulation</li>
+                <li>Size distribution: micro (1-9), small (10-49), medium (50-249), large (250+)</li>
+                <li>Regional distribution across 16 German states</li>
+            </ul>
+            <h3>Production Model</h3>
+            <p>Capital-labor production function with energy inputs</p>
+            <ul class="detail-list">
+                <li>Cobb-Douglas production function: Y = A × K^α × L^β × E^γ</li>
+                <li>Technology parameter A varies by sector and firm size</li>
+                <li>Energy efficiency improvements through investment</li>
+            </ul>
+            <h3>Decision Making</h3>
+            <p>Policy-driven framework for capacity and efficiency decisions</p>
+            <ul class="detail-list">
+                <li>Capacity expansion when utilization > 85%</li>
+                <li>Efficiency upgrades in response to energy price changes</li>
+                <li>Capital renewal based on equipment age and performance</li>
+            </ul>`
+    },
+    'agents-households': { 
+        t: '👥 Households', 
+        b: `<h3>Scale & Demographics</h3>
+            <p>41,039 households representing German population demographics</p>
+            <ul class="detail-list">
+                <li>Income distribution based on German household survey data</li>
+                <li>Regional distribution across 16 German states</li>
+                <li>Age and education level heterogeneity</li>
+            </ul>
+            <h3>Consumption Behavior</h3>
+            <p>Multi-sector consumption with energy-specific choices</p>
+            <ul class="detail-list">
+                <li>Consumption across 20 economic sectors</li>
+                <li>Energy consumption: electricity, heating, transportation</li>
+                <li>Price elasticity varies by income level and region</li>
+            </ul>
+            <h3>Labor Supply</h3>
+            <p>Labor market participation and wage negotiation</p>
+            <ul class="detail-list">
+                <li>Labor supply based on wage levels and unemployment</li>
+                <li>Skill level matching with firm requirements</li>
+                <li>Geographic mobility constraints</li>
+            </ul>`
+    },
     'agents-banks': { t: '🏦 Banks', b: 'Credit & risk assessment, dynamic rates' },
     'markets-goods': { t: '🛒 Goods Markets', b: 'Inventory, exports, price discovery' },
     'markets-labor': { t: '👷 Labor Market', b: 'Wages, hiring, matching' },
@@ -234,7 +280,31 @@ const DETAIL_MAP = {
     'institutions-clearing': { t: '⚖️ Clearing House', b: 'Trade execution & settlement' },
     'institutions-trade': { t: '🌍 Trade System', b: 'Export/import, exchange rates' },
     'simulation-engine': { t: '🏛️ Enterprise Simulation', b: '20k+ agents, multi-market system' },
-    'decision-system': { t: '🧠 Decision System', b: 'Policy-driven framework, capacity & efficiency decisions' },
+    'decision-system': { 
+        t: '🧠 Decision System', 
+        b: `<h3>Policy-Driven Framework</h3>
+            <p>Clean separation of concerns with modular design</p>
+            <ul class="detail-list">
+                <li>DecisionEngine: Orchestrates decision processes</li>
+                <li>DecisionPolicy: Implements specific strategies</li>
+                <li>CapitalAllocator: Manages budget allocation</li>
+                <li>DecisionExecutor: Executes decisions</li>
+            </ul>
+            <h3>Investment Policies</h3>
+            <p>Sophisticated capital allocation mechanisms</p>
+            <ul class="detail-list">
+                <li>Capacity expansion (utilization > 85%)</li>
+                <li>Efficiency upgrades (step-wise improvements)</li>
+                <li>Capital renewal (equipment replacement)</li>
+            </ul>
+            <h3>Adaptive Behavior</h3>
+            <p>Learning and adaptation to changing conditions</p>
+            <ul class="detail-list">
+                <li>Performance-based strategy adjustment</li>
+                <li>Market condition adaptation</li>
+                <li>Policy response mechanisms</li>
+            </ul>`
+    },
     'banking-system': { t: '💰 Banking System', b: 'Risk assessment, loans, dynamic rates' },
     'market-clearing': { t: '⚖️ Market Clearing', b: 'Supply-demand matching, settlement' },
     'energy-policy': { t: '⚡ Energy Policy', b: 'Carbon pricing, renewables, efficiency' },
