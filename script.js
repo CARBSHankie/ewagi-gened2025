@@ -522,7 +522,11 @@ function parseCSV(text) {
 
 let macroChartInstance = null;
 function initMacroChart() {
-    if (!window.Chart) return; // No library, keep static SVG only
+    // Wait for Chart.js to be fully loaded
+    if (!window.Chart) {
+        setTimeout(initMacroChart, 100);
+        return;
+    }
     const canvas = document.getElementById('macroChart');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -563,11 +567,19 @@ function initMacroChart() {
     }
 
     // Try CSV; fallback to embedded JSON payload
-    fetch('assets/simulations/macro_indicators.csv', { cache: 'no-store' })
-        .then(r => { if (!r.ok) throw new Error('not ok'); return r.text(); })
+    fetch('./assets/simulations/macro_indicators.csv', { 
+        cache: 'no-store',
+        mode: 'cors',
+        credentials: 'same-origin'
+    })
+        .then(r => { 
+            if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`); 
+            return r.text(); 
+        })
         .then(text => parseCSV(text))
         .then(rows => render(datasetFromCSV(rows)))
-        .catch(() => {
+        .catch((err) => {
+            console.warn('CSV fetch failed:', err.message);
             const dataEl = document.getElementById('macro-data');
             if (!dataEl) return;
             try {
@@ -580,6 +592,8 @@ function initMacroChart() {
                         { label: 'Unemployment (%)', data: payload.series.Unemployment, borderColor: '#3498db', backgroundColor: 'transparent', tension: .2, yAxisID: 'y1' }
                     ]
                 });
-            } catch(_) { /* keep static SVG */ }
+            } catch(_) { 
+                console.warn('Fallback JSON also failed');
+            }
         });
 }
