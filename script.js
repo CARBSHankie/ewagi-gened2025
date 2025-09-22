@@ -66,6 +66,15 @@ function toggleFullscreen() {
         container.classList.remove('fullscreen-mode');
         isFullscreen = false;
         btn.textContent = 'Fullscreen';
+        
+        // Force restore control panel visibility
+        const controls = document.querySelector('.presentation-controls');
+        if (controls) {
+            controls.style.display = 'flex';
+            controls.style.visibility = 'visible';
+            controls.style.opacity = '1';
+        }
+        
         showSlide(currentSlide);
         setTimeout(removeFloatingExitButton, 100);
     }
