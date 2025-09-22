@@ -268,6 +268,38 @@ const DETAIL_MAP = {
                 <li>Manufacturing: Automotive, machinery (medium E/L ratio)</li>
                 <li>Services: IT, finance (low E/L ratio)</li>
                 <li>Construction: Building materials (medium E/L ratio)</li>
+            </ul>
+            <h3>Financial Structure</h3>
+            <p>Capital structure and financing mechanisms</p>
+            <ul class="detail-list">
+                <li>Debt-to-equity ratio: 0.3-0.8 by sector</li>
+                <li>Working capital: 15-25% of total assets</li>
+                <li>Credit rating: AAA to BBB based on size and sector</li>
+                <li>Interest coverage: 3-8x EBITDA by risk category</li>
+            </ul>
+            <h3>Market Behavior</h3>
+            <p>Competitive dynamics and market positioning</p>
+            <ul class="detail-list">
+                <li>Market share: 0.1-15% depending on sector concentration</li>
+                <li>Price setting: Cost-plus or market-based pricing</li>
+                <li>Product differentiation: Quality, innovation, service</li>
+                <li>Export orientation: 20-80% of sales by sector</li>
+            </ul>
+            <h3>Innovation & R&D</h3>
+            <p>Research and development investment patterns</p>
+            <ul class="detail-list">
+                <li>R&D intensity: 1-8% of sales by sector</li>
+                <li>Patent applications: 0.1-2.0 per firm annually</li>
+                <li>Technology adoption: 2-5 year lag for new technologies</li>
+                <li>Digital transformation: Industry 4.0 integration</li>
+            </ul>
+            <h3>Environmental Performance</h3>
+            <p>Sustainability and environmental impact</p>
+            <ul class="detail-list">
+                <li>Carbon intensity: 0.1-2.0 tCO2/€1000 revenue</li>
+                <li>Energy efficiency: 2-5% annual improvement potential</li>
+                <li>Renewable energy: 10-40% of total consumption</li>
+                <li>Circular economy: Waste reduction and recycling</li>
             </ul>`
     },
     'agents-households': { 
