@@ -457,7 +457,8 @@ function showDetail(detailId) {
         document.body.style.overflow = 'hidden';
         // Initialize dynamic content for specific details
         if (detailId === 'macroeconomic-indicators') {
-            initMacroChart();
+            // Small delay to ensure modal is visible and canvas has dimensions
+            setTimeout(initMacroChart, 50);
         }
     } else {
         const entry = DETAIL_MAP[detailId];
@@ -488,7 +489,8 @@ function showDetail(detailId) {
 
             // Initialize dynamic content for specific details
             if (detailId === 'macroeconomic-indicators') {
-                initMacroChart();
+                // Small delay to ensure modal is visible and canvas has dimensions
+                setTimeout(initMacroChart, 50);
             }
         }
     }
@@ -527,7 +529,25 @@ function initMacroChart() {
         setTimeout(initMacroChart, 100);
         return;
     }
-    const canvas = document.getElementById('macroChart');
+    
+    // Find the visible canvas in the modal (not the hidden static one)
+    let canvas = null;
+    const modal = document.getElementById('detail-modal');
+    if (modal && modal.style.display !== 'none') {
+        canvas = modal.querySelector('#macroChart');
+    }
+    
+    // Fallback: find any visible canvas with the macroChart id
+    if (!canvas) {
+        const canvases = document.querySelectorAll('#macroChart');
+        for (const c of canvases) {
+            if (c.offsetParent !== null && c.clientWidth > 0) {
+                canvas = c;
+                break;
+            }
+        }
+    }
+    
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
