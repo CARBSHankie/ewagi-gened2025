@@ -66,15 +66,10 @@ function toggleFullscreen() {
         container.classList.remove('fullscreen-mode');
         isFullscreen = false;
         btn.textContent = 'Fullscreen';
-        
+
         // Force restore control panel visibility
-        const controls = document.querySelector('.presentation-controls');
-        if (controls) {
-            controls.style.display = 'flex';
-            controls.style.visibility = 'visible';
-            controls.style.opacity = '1';
-        }
-        
+        restoreControlsPanel();
+
         showSlide(currentSlide);
         setTimeout(removeFloatingExitButton, 100);
     }
@@ -184,12 +179,44 @@ document.addEventListener('keydown', e => {
 });
 
 document.addEventListener('fullscreenchange', () => {
-    if (!document.fullscreenElement && isFullscreen) {
+    handleFullscreenChange();
+});
+
+// Cross-browser fullscreen change listeners
+document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+function handleFullscreenChange() {
+    // If we've exited native fullscreen (via ESC or browser UI), ensure UI/state are restored
+    if (!document.fullscreenElement) {
+        const container = document.querySelector('.presentation-container');
+        const btn = document.getElementById('fullscreenBtn');
+
         isFullscreen = false;
-        document.getElementById('fullscreenBtn').textContent = 'Fullscreen';
+        document.body.classList.remove('fullscreen-active');
+        if (container) container.classList.remove('fullscreen-mode');
+        if (btn) btn.textContent = 'Fullscreen';
+
+        // Restore control panel visibility explicitly
+        // Use a tiny delay to ensure style recalculation after exiting fullscreen
+        setTimeout(() => {
+            restoreControlsPanel();
+            showSlide(currentSlide);
+        }, 0);
+
         removeFloatingExitButton();
     }
-});
+}
+
+function restoreControlsPanel() {
+    const controls = document.querySelector('.presentation-controls');
+    if (controls) {
+        controls.style.display = 'flex';
+        controls.style.visibility = 'visible';
+        controls.style.opacity = '1';
+    }
+}
 
 window.addEventListener('hashchange', () => {
     const hash = window.location.hash;

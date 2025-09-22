@@ -83,6 +83,8 @@ body.fullscreen-active *:not(.presentation-container):not(.presentation-containe
 .presentation-container.fullscreen-mode .slide.title-slide{color:#fff!important;text-align:center!important}
 .presentation-container.fullscreen-mode .slide.conclusion-slide{color:#fff!important;text-align:left!important}
 .presentation-container.fullscreen-mode .slide.title-slide{background:linear-gradient(135deg,#0f0f23,#1a1a2e 50%,#16213e)!important}
+/* Ensure controls are visible when not in fullscreen */
+body:not(.fullscreen-active) .presentation-controls{display:flex!important;visibility:visible!important;opacity:1!important}
 .presentation-container.fullscreen-mode .slide.conclusion-slide{background:linear-gradient(135deg,#2c3e50,#3498db)!important}
 .presentation-container.fullscreen-mode .slide.title-slide.active{display:flex!important;flex-direction:column!important;justify-content:center!important;visibility:visible!important;opacity:1!important}
 .presentation-container.fullscreen-mode .slide.conclusion-slide.active{display:flex!important;flex-direction:column!important;justify-content:flex-start!important;visibility:visible!important;opacity:1!important}
