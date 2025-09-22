@@ -1,0 +1,15 @@
+# Ignore presentation notes
+EWaGI_Presentation_Notes.md
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore temporary files
+*.tmp
+*.temp
+*~
+
+# Ignore backup files
+*.bak
+*.backup
