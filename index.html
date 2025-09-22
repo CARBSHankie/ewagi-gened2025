@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EWaGI: Macroeconomic Agent-Based Model for Energy Policy Analysis</title>
     <link rel="stylesheet" href="styles.css">
+    <script defer src="libs/chart.js-4.5.0/package/dist/chart.umd.min.js" onerror="console.warn('Chart.js not available; interactive chart disabled')"></script>
 </head>
 <body>
     <div class="presentation-container">
@@ -27,11 +28,9 @@
             <div class="controls-stack">
                 <div class="nav-controls">
                     <button class="nav-btn" id="prevBtn">← Previous</button>
+                    <div class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">8</span></div>
                     <button class="nav-btn" id="nextBtn">Next →</button>
                     <button class="fullscreen-btn" id="fullscreenBtn">Fullscreen</button>
-                </div>
-                <div class="slide-counter">
-                    <span id="currentSlide">1</span> / <span id="totalSlides">8</span>
                 </div>
             </div>
         </div>
@@ -379,6 +378,25 @@
                 
                 <div class="architecture-legend">
                     <p><strong>Click any module</strong> to explore detailed results and performance metrics.</p>
+            </div>
+        </div>
+
+        <!-- Detail: Macroeconomic Indicators -->
+        <div id="detail-macroeconomic-indicators" class="detail-page" style="display:none">
+            <div class="detail-content">
+                <div class="detail-header">
+                    <h2 class="detail-title">📊 Macroeconomic Indicators</h2>
+                    <button class="detail-close" onclick="hideDetail()">Close</button>
+                </div>
+                <div class="detail-section">
+                    <h3>Simulation Results</h3>
+                    <div style="height:240px;background:#fff;border:1px solid rgba(52,152,219,.25);border-radius:8px;padding:8px">
+                        <canvas id="macroChart"></canvas>
+                    </div>
+                    <!-- Local data payload for optional interactive chart (used only if Chart.js is available locally) -->
+                    <script id="macro-data" type="application/json">{"labels":["t1","t2","t3","t4","t5","t6","t7"],"series":{"GDP":[100,103,107,110,114,118,121],"Inflation":[2.0,2.2,1.9,1.8,2.1,2.3,2.0],"Unemployment":[6.2,6.1,6.0,5.9,5.8,5.7,5.6]}}</script>
+                    <noscript><div class="label" style="margin-top:8px;color:#64748b">JavaScript disabled: interactive chart unavailable.</div></noscript>
+                </div>
             </div>
         </div>
 

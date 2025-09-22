@@ -455,6 +455,10 @@ function showDetail(detailId) {
             detailPage.style.height = '100vh';
         }
         document.body.style.overflow = 'hidden';
+        // Initialize dynamic content for specific details
+        if (detailId === 'macroeconomic-indicators') {
+            initMacroChart();
+        }
     } else {
         const entry = DETAIL_MAP[detailId];
         if (entry) {
@@ -463,6 +467,13 @@ function showDetail(detailId) {
             const bodyEl = modal.querySelector('#detail-body');
             if (titleEl) titleEl.textContent = entry.t || '';
             if (bodyEl) bodyEl.innerHTML = entry.b || '';
+
+            // If a static detail exists in DOM, hydrate modal with that content
+            const staticDetail = document.getElementById('detail-' + detailId);
+            if (staticDetail) {
+                const content = staticDetail.querySelector('.detail-content');
+                if (content) bodyEl.innerHTML = content.innerHTML;
+            }
             const fs = isFS();
             modal.style.display = 'block';
             modal.style.visibility = 'visible';
@@ -474,6 +485,11 @@ function showDetail(detailId) {
             modal.style.width = '100vw';
             modal.style.height = '100vh';
             document.body.style.overflow = 'hidden';
+
+            // Initialize dynamic content for specific details
+            if (detailId === 'macroeconomic-indicators') {
+                initMacroChart();
+            }
         }
     }
 }
@@ -490,4 +506,80 @@ function hideDetail() {
         page.style.height = '100%';
     });
     document.body.style.overflow = 'auto';
+}
+
+// ===== Macroeconomic Indicators chart utilities =====
+function parseCSV(text) {
+    const lines = text.trim().split(/\r?\n/);
+    const header = lines.shift().split(',');
+    return lines.filter(Boolean).map(line => {
+        const cols = line.split(',');
+        const row = {};
+        header.forEach((h, i) => { row[h] = cols[i]; });
+        return row;
+    });
+}
+
+let macroChartInstance = null;
+function initMacroChart() {
+    if (!window.Chart) return; // No library, keep static SVG only
+    const canvas = document.getElementById('macroChart');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    function render(data) {
+        if (macroChartInstance) macroChartInstance.destroy();
+        macroChartInstance = new Chart(ctx, {
+            type: 'line',
+            data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { type: 'linear', position: 'left', grid: { color: 'rgba(229,238,246,.7)' }, title: { display: true, text: 'Output / Price Index' } },
+                    y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Unemployment (%)' } }
+                },
+                plugins: { legend: { display: true, position: 'bottom' } }
+            }
+        });
+    }
+
+    function datasetFromCSV(rows) {
+        const labels = rows.map(r => r.Tick);
+        const toNum = v => (v == null || v === '' ? null : Number(v));
+        const output = rows.map(r => toNum(r.TotalOutput));
+        const price = rows.map(r => toNum(r.PriceIndex));
+        const unemp = rows.map(r => toNum(r.UnemploymentRate));
+        return {
+            labels,
+            datasets: [
+                { label: 'Total Output', data: output, borderColor: '#2ecc71', backgroundColor: 'transparent', tension: .2, yAxisID: 'y' },
+                { label: 'Price Index', data: price, borderColor: '#e67e22', backgroundColor: 'transparent', tension: .2, yAxisID: 'y' },
+                { label: 'Unemployment (%)', data: unemp, borderColor: '#3498db', backgroundColor: 'transparent', tension: .2, yAxisID: 'y1' }
+            ]
+        };
+    }
+
+    // Try CSV; fallback to embedded JSON payload
+    fetch('assets/simulations/macro_indicators.csv', { cache: 'no-store' })
+        .then(r => { if (!r.ok) throw new Error('not ok'); return r.text(); })
+        .then(text => parseCSV(text))
+        .then(rows => render(datasetFromCSV(rows)))
+        .catch(() => {
+            const dataEl = document.getElementById('macro-data');
+            if (!dataEl) return;
+            try {
+                const payload = JSON.parse(dataEl.textContent);
+                render({
+                    labels: payload.labels,
+                    datasets: [
+                        { label: 'GDP (index)', data: payload.series.GDP, borderColor: '#2ecc71', backgroundColor: 'transparent', tension: .2, yAxisID: 'y' },
+                        { label: 'Inflation (%)', data: payload.series.Inflation, borderColor: '#e67e22', backgroundColor: 'transparent', tension: .2, yAxisID: 'y' },
+                        { label: 'Unemployment (%)', data: payload.series.Unemployment, borderColor: '#3498db', backgroundColor: 'transparent', tension: .2, yAxisID: 'y1' }
+                    ]
+                });
+            } catch(_) { /* keep static SVG */ }
+        });
 }

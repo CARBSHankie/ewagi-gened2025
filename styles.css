@@ -8,12 +8,12 @@ body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea
 .section-link:hover{background:#3498db;color:#fff;border-color:#3498db}
 .slide-badge{position:fixed;top:10px;left:10px;background:rgba(0,0,0,.6);color:#fff;padding:6px 10px;border-radius:6px;font-size:12px;z-index:1100}
 .presentation-controls{background:#f8f9fa;padding:10px 12px;border-bottom:1px solid #e5eef6;display:flex;justify-content:center;align-items:center}
-.controls-stack{display:flex;flex-direction:column;align-items:center;gap:6px}
-.nav-controls{display:flex;gap:8px;justify-content:center}
+.controls-stack{display:flex;flex-direction:column;align-items:center;gap:4px}
+.nav-controls{display:flex;gap:10px;justify-content:center;align-items:center}
 .nav-btn,.fullscreen-btn{background:#3498db;color:#fff;border:none;padding:8px 14px;border-radius:999px;cursor:pointer;font-size:.95em;transition:all .25s ease;box-shadow:0 2px 8px rgba(52,152,219,.25)}
 .nav-btn:hover,.fullscreen-btn:hover{background:#2980b9;transform:translateY(-1px)}
 .nav-btn:disabled{background:#c8d6e5;cursor:not-allowed}
-.slide-counter{background:rgba(52,152,219,.1);color:#2c3e50;padding:4px 10px;border-radius:999px;font-size:.9em;border:1px solid rgba(52,152,219,.25)}
+.slide-counter{background:rgba(52,152,219,.1);color:#2c3e50;padding:4px 10px;border-radius:999px;font-size:.9em;border:1px solid rgba(52,152,219,.25);display:inline-flex;align-items:center}
 .slide{display:none;padding:60px;min-height:600px}
 .slide.active{display:block}
 .slide h1{color:#2c3e50;font-size:2.5em;margin-bottom:30px;border-bottom:3px solid #3498db;padding-bottom:15px}
