@@ -7,9 +7,7 @@ body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea
 .section-link{border:1px solid rgba(52,152,219,.35);background:rgba(52,152,219,.08);color:#2c3e50;padding:8px 14px;border-radius:999px;cursor:pointer;font-size:.95em;transition:all .25s ease}
 .section-link:hover{background:#3498db;color:#fff;border-color:#3498db}
 .slide-badge{position:fixed;top:10px;left:10px;background:rgba(0,0,0,.6);color:#fff;padding:6px 10px;border-radius:6px;font-size:12px;z-index:1100}
-.presentation-controls{background:#f8f9fa;padding:10px 12px;border-bottom:1px solid #e5eef6;display:flex;justify-content:center;align-items:center}
-.controls-stack{display:flex;flex-direction:column;align-items:center;gap:4px}
-.nav-controls{display:flex;gap:10px;justify-content:center;align-items:center}
+.nav-controls{display:flex;gap:10px;justify-content:center;align-items:center;margin-top:15px}
 .nav-btn,.fullscreen-btn{background:#3498db;color:#fff;border:none;padding:8px 14px;border-radius:999px;cursor:pointer;font-size:.95em;transition:all .25s ease;box-shadow:0 2px 8px rgba(52,152,219,.25)}
 .nav-btn:hover,.fullscreen-btn:hover{background:#2980b9;transform:translateY(-1px)}
 .nav-btn:disabled{background:#c8d6e5;cursor:not-allowed}
@@ -73,18 +71,18 @@ body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea
 .conclusion-slide ul{font-size:1.8em;line-height:1.8;margin-left:40px}
 .conclusion-slide li{margin-bottom:25px}
 .conclusion-slide .highlight{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.3)}
-@media(max-width:768px){.presentation-container{margin:0;box-shadow:none}.slide{padding:30px 20px}.slide h1{font-size:2em}.slide h2{font-size:1.5em}.presentation-controls{flex-direction:column;gap:15px}.nav-controls{justify-content:center}.stats-grid{grid-template-columns:1fr}.feature-list{grid-template-columns:1fr}}
+@media(max-width:768px){.presentation-container{margin:0;box-shadow:none}.slide{padding:30px 20px}.slide h1{font-size:2em}.slide h2{font-size:1.5em}.nav-controls{justify-content:center;flex-wrap:wrap;gap:8px}.stats-grid{grid-template-columns:1fr}.feature-list{grid-template-columns:1fr}}
 body.fullscreen-active{overflow:hidden!important;margin:0!important;padding:0!important;background:#fff!important}
 body.fullscreen-active *:not(.presentation-container):not(.presentation-container *):not(.fullscreen-exit-btn):not(.fullscreen-nav-controls):not(.fullscreen-nav-controls *):not(.detail-page):not(.detail-page *){display:none!important;visibility:hidden!important;opacity:0!important;height:0!important;width:0!important;overflow:hidden!important;position:absolute!important;left:-9999px!important}
 .presentation-container.fullscreen-mode{position:fixed!important;top:0!important;left:0!important;width:100vw!important;height:100vh!important;z-index:2147483647!important;background:#fff!important;margin:0!important;padding:0!important;max-width:none!important;box-shadow:none!important}
-.presentation-container.fullscreen-mode .presentation-header,.presentation-container.fullscreen-mode .presentation-controls,.presentation-container.fullscreen-mode .presentation-footer{display:none!important}
+.presentation-container.fullscreen-mode .presentation-header,.presentation-container.fullscreen-mode .presentation-footer{display:none!important}
 .presentation-container.fullscreen-mode .slide{width:100vw!important;height:100vh!important;padding:60px 80px!important;display:none!important;position:fixed!important;top:0!important;left:0!important;background:#fff!important;box-sizing:border-box!important;overflow-y:auto!important;z-index:2147483647!important}
 .presentation-container.fullscreen-mode .slide.active{display:flex!important;flex-direction:column!important;justify-content:center!important;visibility:visible!important;opacity:1!important}
 .presentation-container.fullscreen-mode .slide.title-slide{color:#fff!important;text-align:center!important}
 .presentation-container.fullscreen-mode .slide.conclusion-slide{color:#fff!important;text-align:left!important}
 .presentation-container.fullscreen-mode .slide.title-slide{background:linear-gradient(135deg,#0f0f23,#1a1a2e 50%,#16213e)!important}
 /* Ensure controls are visible when not in fullscreen */
-body:not(.fullscreen-active) .presentation-controls{display:flex!important;visibility:visible!important;opacity:1!important}
+body:not(.fullscreen-active) .nav-controls{display:flex!important;visibility:visible!important;opacity:1!important}
 .presentation-container.fullscreen-mode .slide.conclusion-slide{background:linear-gradient(135deg,#2c3e50,#3498db)!important}
 .presentation-container.fullscreen-mode .slide.title-slide.active{display:flex!important;flex-direction:column!important;justify-content:center!important;visibility:visible!important;opacity:1!important}
 .presentation-container.fullscreen-mode .slide.conclusion-slide.active{display:flex!important;flex-direction:column!important;justify-content:flex-start!important;visibility:visible!important;opacity:1!important}
