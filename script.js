@@ -231,6 +231,8 @@ const DETAIL_MAP = {
                 <li>3,598 active firms in current simulation</li>
                 <li>Size distribution: micro (1-9), small (10-49), medium (50-249), large (250+)</li>
                 <li>Regional distribution across 16 German states</li>
+                <li>Total employment: 44.6 million workers</li>
+                <li>Capital stock: €8.2 trillion across all firms</li>
             </ul>
             <h3>Production Model</h3>
             <p>Capital-labor production function with energy inputs</p>
@@ -238,13 +240,34 @@ const DETAIL_MAP = {
                 <li>Cobb-Douglas production function: Y = A × K^α × L^β × E^γ</li>
                 <li>Technology parameter A varies by sector and firm size</li>
                 <li>Energy efficiency improvements through investment</li>
+                <li>Returns to scale: α + β + γ = 0.95 (slightly decreasing)</li>
+                <li>Energy elasticity: γ = 0.08 (energy-intensive sectors)</li>
             </ul>
-            <h3>Decision Making</h3>
+            <h3>Decision Making Framework</h3>
             <p>Policy-driven framework for capacity and efficiency decisions</p>
             <ul class="detail-list">
                 <li>Capacity expansion when utilization > 85%</li>
                 <li>Efficiency upgrades in response to energy price changes</li>
                 <li>Capital renewal based on equipment age and performance</li>
+                <li>Investment threshold: 15% internal rate of return</li>
+                <li>Risk-adjusted discount rate: 8-12% by sector</li>
+            </ul>
+            <h3>Energy Adaptation Strategies</h3>
+            <p>Heterogeneous responses to energy price changes</p>
+            <ul class="detail-list">
+                <li>Energy efficiency: 2-5% annual improvement potential</li>
+                <li>Fuel switching: Natural gas to electricity substitution</li>
+                <li>Self-generation: On-site renewable energy systems</li>
+                <li>Process optimization: Lean manufacturing principles</li>
+                <li>Technology adoption: Industry 4.0 integration</li>
+            </ul>
+            <h3>Sectoral Characteristics</h3>
+            <p>Key differences across economic sectors</p>
+            <ul class="detail-list">
+                <li>Energy-intensive: Steel, cement, chemicals (high E/L ratio)</li>
+                <li>Manufacturing: Automotive, machinery (medium E/L ratio)</li>
+                <li>Services: IT, finance (low E/L ratio)</li>
+                <li>Construction: Building materials (medium E/L ratio)</li>
             </ul>`
     },
     'agents-households': { 
