@@ -461,38 +461,53 @@ function showDetail(detailId) {
             setTimeout(initMacroChart, 50);
         }
     } else {
-        const entry = DETAIL_MAP[detailId];
-        if (entry) {
-            const modal = ensureDetailModal();
-            const titleEl = modal.querySelector('#detail-title');
-            const bodyEl = modal.querySelector('#detail-body');
-            if (titleEl) titleEl.textContent = entry.t || '';
-            if (bodyEl) bodyEl.innerHTML = entry.b || '';
+        // Try to lazy-load external detail file
+        const modal = ensureDetailModal();
+        const titleEl = modal.querySelector('#detail-title');
+        const bodyEl = modal.querySelector('#detail-body');
+        // optimistic default title
+        if (titleEl) titleEl.textContent = '';
+        if (bodyEl) bodyEl.innerHTML = '<div style="padding:16px;color:#94a3b8">Loading…</div>';
 
-            // If a static detail exists in DOM, hydrate modal with that content
-            const staticDetail = document.getElementById('detail-' + detailId);
-            if (staticDetail) {
-                const content = staticDetail.querySelector('.detail-content');
-                if (content) bodyEl.innerHTML = content.innerHTML;
-            }
-            const fs = isFS();
-            modal.style.display = 'block';
-            modal.style.visibility = 'visible';
-            modal.style.opacity = '1';
-            modal.style.zIndex = '2147483647';
-            modal.style.position = 'fixed';
-            modal.style.top = '0';
-            modal.style.left = '0';
-            modal.style.width = '100vw';
-            modal.style.height = '100vh';
-            document.body.style.overflow = 'hidden';
+        const url = `details/detail-${detailId}.html`;
+        fetch(url, { cache: 'no-store' })
+            .then(r => {
+                if (!r.ok) throw new Error(`HTTP ${r.status}`);
+                return r.text();
+            })
+            .then(html => {
+                // Inject fetched HTML into modal body
+                if (bodyEl) bodyEl.innerHTML = html;
+                // If the fetched content includes a wrapper, prefer its inner content
+                const fetchedRoot = bodyEl.querySelector(`#detail-${detailId} .detail-content`) || bodyEl.querySelector('.detail-content');
+                if (fetchedRoot) bodyEl.innerHTML = fetchedRoot.outerHTML;
 
-            // Initialize dynamic content for specific details
-            if (detailId === 'macroeconomic-indicators') {
-                // Small delay to ensure modal is visible and canvas has dimensions
-                setTimeout(initMacroChart, 50);
-            }
-        }
+                // Initialize dynamic content as needed
+                if (detailId === 'macroeconomic-indicators') setTimeout(initMacroChart, 50);
+            })
+            .catch(() => {
+                // Fallback to inline map
+                const entry = DETAIL_MAP[detailId];
+                if (entry) {
+                    if (titleEl) titleEl.textContent = entry.t || '';
+                    if (bodyEl) bodyEl.innerHTML = entry.b || '';
+                } else {
+                    if (titleEl) titleEl.textContent = 'Details';
+                    if (bodyEl) bodyEl.innerHTML = '<div style="padding:16px">Details not available.</div>';
+                }
+            })
+            .finally(() => {
+                modal.style.display = 'block';
+                modal.style.visibility = 'visible';
+                modal.style.opacity = '1';
+                modal.style.zIndex = '2147483647';
+                modal.style.position = 'fixed';
+                modal.style.top = '0';
+                modal.style.left = '0';
+                modal.style.width = '100vw';
+                modal.style.height = '100vh';
+                document.body.style.overflow = 'hidden';
+            });
     }
 }
 
