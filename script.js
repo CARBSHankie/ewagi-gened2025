@@ -258,164 +258,6 @@ document.addEventListener('click', function(e) {
     }
 }, true);
 
-const DETAIL_MAP = {
-    'agents-firms': { 
-        t: '🏭 Firms', 
-        b: `<h3>Scale & Distribution</h3>
-            <p>20,000+ heterogeneous firms across 72 economic divisions (German WZ 2008 classification)</p>
-            <ul class="detail-list">
-                <li>3,598 active firms in current simulation</li>
-                <li>Size distribution: micro (1-9), small (10-49), medium (50-249), large (250+)</li>
-                <li>Regional distribution across 16 German states</li>
-                <li>Total employment: 44.6 million workers</li>
-                <li>Capital stock: €8.2 trillion across all firms</li>
-            </ul>
-            <h3>Production Model</h3>
-            <p>Capital-labor production function with energy inputs</p>
-            <ul class="detail-list">
-                <li>Cobb-Douglas production function: Y = A × K^α × L^β × E^γ</li>
-                <li>Technology parameter A varies by sector and firm size</li>
-                <li>Energy efficiency improvements through investment</li>
-                <li>Returns to scale: α + β + γ = 0.95 (slightly decreasing)</li>
-                <li>Energy elasticity: γ = 0.08 (energy-intensive sectors)</li>
-            </ul>
-            <h3>Decision Making Framework</h3>
-            <p>Policy-driven framework for capacity and efficiency decisions</p>
-            <ul class="detail-list">
-                <li>Capacity expansion when utilization > 85%</li>
-                <li>Efficiency upgrades in response to energy price changes</li>
-                <li>Capital renewal based on equipment age and performance</li>
-                <li>Investment threshold: 15% internal rate of return</li>
-                <li>Risk-adjusted discount rate: 8-12% by sector</li>
-            </ul>
-            <h3>Energy Adaptation Strategies</h3>
-            <p>Heterogeneous responses to energy price changes</p>
-            <ul class="detail-list">
-                <li>Energy efficiency: 2-5% annual improvement potential</li>
-                <li>Fuel switching: Natural gas to electricity substitution</li>
-                <li>Self-generation: On-site renewable energy systems</li>
-                <li>Process optimization: Lean manufacturing principles</li>
-                <li>Technology adoption: Industry 4.0 integration</li>
-            </ul>
-            <h3>Sectoral Characteristics</h3>
-            <p>Key differences across economic sectors</p>
-            <ul class="detail-list">
-                <li>Energy-intensive: Steel, cement, chemicals (high E/L ratio)</li>
-                <li>Manufacturing: Automotive, machinery (medium E/L ratio)</li>
-                <li>Services: IT, finance (low E/L ratio)</li>
-                <li>Construction: Building materials (medium E/L ratio)</li>
-            </ul>
-            <h3>Financial Structure</h3>
-            <p>Capital structure and financing mechanisms</p>
-            <ul class="detail-list">
-                <li>Debt-to-equity ratio: 0.3-0.8 by sector</li>
-                <li>Working capital: 15-25% of total assets</li>
-                <li>Credit rating: AAA to BBB based on size and sector</li>
-                <li>Interest coverage: 3-8x EBITDA by risk category</li>
-            </ul>
-            <h3>Market Behavior</h3>
-            <p>Competitive dynamics and market positioning</p>
-            <ul class="detail-list">
-                <li>Market share: 0.1-15% depending on sector concentration</li>
-                <li>Price setting: Cost-plus or market-based pricing</li>
-                <li>Product differentiation: Quality, innovation, service</li>
-                <li>Export orientation: 20-80% of sales by sector</li>
-            </ul>
-            <h3>Innovation & R&D</h3>
-            <p>Research and development investment patterns</p>
-            <ul class="detail-list">
-                <li>R&D intensity: 1-8% of sales by sector</li>
-                <li>Patent applications: 0.1-2.0 per firm annually</li>
-                <li>Technology adoption: 2-5 year lag for new technologies</li>
-                <li>Digital transformation: Industry 4.0 integration</li>
-            </ul>
-            <h3>Environmental Performance</h3>
-            <p>Sustainability and environmental impact</p>
-            <ul class="detail-list">
-                <li>Carbon intensity: 0.1-2.0 tCO2/€1000 revenue</li>
-                <li>Energy efficiency: 2-5% annual improvement potential</li>
-                <li>Renewable energy: 10-40% of total consumption</li>
-                <li>Circular economy: Waste reduction and recycling</li>
-            </ul>`
-    },
-    'agents-households': { 
-        t: '👥 Households', 
-        b: `<h3>Scale & Demographics</h3>
-            <p>41,039 households representing German population demographics</p>
-            <ul class="detail-list">
-                <li>Income distribution based on German household survey data</li>
-                <li>Regional distribution across 16 German states</li>
-                <li>Age and education level heterogeneity</li>
-            </ul>
-            <h3>Consumption Behavior</h3>
-            <p>Multi-sector consumption with energy-specific choices</p>
-            <ul class="detail-list">
-                <li>Consumption across 20 economic sectors</li>
-                <li>Energy consumption: electricity, heating, transportation</li>
-                <li>Price elasticity varies by income level and region</li>
-            </ul>
-            <h3>Labor Supply</h3>
-            <p>Labor market participation and wage negotiation</p>
-            <ul class="detail-list">
-                <li>Labor supply based on wage levels and unemployment</li>
-                <li>Skill level matching with firm requirements</li>
-                <li>Geographic mobility constraints</li>
-            </ul>`
-    },
-    'agents-banks': { t: '🏦 Banks', b: 'Credit & risk assessment, dynamic rates' },
-    'markets-goods': { t: '🛒 Goods Markets', b: 'Inventory, exports, price discovery' },
-    'markets-labor': { t: '👷 Labor Market', b: 'Wages, hiring, matching' },
-    'markets-financial': { t: '💹 Financial Market', b: 'Credit allocation, liquidity' },
-    'markets-energy': { t: '⚡ Energy Market', b: 'Policy, pricing, technology' },
-    'institutions-government': { t: '🏛️ Government', b: 'Fiscal & energy policy' },
-    'institutions-clearing': { t: '⚖️ Clearing House', b: 'Trade execution & settlement' },
-    'institutions-trade': { t: '🌍 Trade System', b: 'Export/import, exchange rates' },
-    'simulation-engine': { t: '🏛️ Enterprise Simulation', b: '20k+ agents, multi-market system' },
-    'decision-system': { 
-        t: '🧠 Decision System', 
-        b: `<h3>Policy-Driven Framework</h3>
-            <p>Clean separation of concerns with modular design</p>
-            <ul class="detail-list">
-                <li>DecisionEngine: Orchestrates decision processes</li>
-                <li>DecisionPolicy: Implements specific strategies</li>
-                <li>CapitalAllocator: Manages budget allocation</li>
-                <li>DecisionExecutor: Executes decisions</li>
-            </ul>
-            <h3>Investment Policies</h3>
-            <p>Sophisticated capital allocation mechanisms</p>
-            <ul class="detail-list">
-                <li>Capacity expansion (utilization > 85%)</li>
-                <li>Efficiency upgrades (step-wise improvements)</li>
-                <li>Capital renewal (equipment replacement)</li>
-            </ul>
-            <h3>Adaptive Behavior</h3>
-            <p>Learning and adaptation to changing conditions</p>
-            <ul class="detail-list">
-                <li>Performance-based strategy adjustment</li>
-                <li>Market condition adaptation</li>
-                <li>Policy response mechanisms</li>
-            </ul>`
-    },
-    'banking-system': { t: '💰 Banking System', b: 'Risk assessment, loans, dynamic rates' },
-    'market-clearing': { t: '⚖️ Market Clearing', b: 'Supply-demand matching, settlement' },
-    'energy-policy': { t: '⚡ Energy Policy', b: 'Carbon pricing, renewables, efficiency' },
-    'hpc-implementation': { t: '🖥️ HPC Implementation', b: '15m-2h runtime, G1 GC, 30GB heap' },
-    'macroeconomic-indicators': { t: '📊 Macro Indicators', b: 'GDP €4.2T, Pop 83.2M, Unemployment 5.7%' },
-    'sector-analysis': { t: '🏭 Sector Performance', b: '20 sectors: manufacturing, services, energy-intensive' },
-    'household-behavior': { t: '👥 Household Behavior', b: 'Income, consumption, energy choices' },
-    'firm-dynamics': { t: '🏢 Firm Dynamics', b: 'Capacity, efficiency, technology' },
-    'simulation-performance': { t: '⚡ Performance', b: '15m-2h runtime, G1 GC, parallel processing' },
-    'validation-results': { t: '✅ Validation', b: 'Stats verified, consistency checks, robustness tests' },
-    'data-economic-structure': { t: '📊 Economic Structure', b: '20 sectors, 72 divisions, German WZ 2008 classification' },
-    'data-regional-sectoral': { t: '🗺️ Regional Data', b: 'State indicators, NUTS2 employment, sector distribution' },
-    'data-firm-employment': { t: '🏢 Firm Data', b: 'Harmonized employment stats, firm counts, size distribution' },
-    'data-input-output': { t: '⚙️ Input-Output', b: '72x72 coefficients matrix, inter-industry relationships' },
-    'data-gdp-indicators': { t: '💰 GDP Data', b: 'Final GDP, value added by sector/state, growth rates' },
-    'data-processing': { t: '🛠️ Processing', b: 'Python tools, aggregation, 3 processing modes' },
-    'data-hierarchy': { t: '🏗️ Database Structure', b: 'Country→Region→Sector→Division→Agent hierarchy, SQLite' },
-    'data-validation': { t: '✅ Data Validation', b: 'Relationship validation, consistency checks, completeness' },
-    'data-calibration': { t: '🎯 Calibration', b: 'GDP 1.5%, Unemployment 5.5%, Inflation 2.0%, firm metrics' }
-};
 
 function ensureDetailModal() {
     let modal = document.getElementById('detail-modal');
@@ -632,3 +474,162 @@ function initMacroChart() {
             }
         });
 }
+
+const DETAIL_MAP = {
+    'agents-firms': { 
+        t: '🏭 Firms', 
+        b: `<h3>Scale & Distribution</h3>
+            <p>20,000+ heterogeneous firms across 72 economic divisions (German WZ 2008 classification)</p>
+            <ul class="detail-list">
+                <li>3,598 active firms in current simulation</li>
+                <li>Size distribution: micro (1-9), small (10-49), medium (50-249), large (250+)</li>
+                <li>Regional distribution across 16 German states</li>
+                <li>Total employment: 44.6 million workers</li>
+                <li>Capital stock: €8.2 trillion across all firms</li>
+            </ul>
+            <h3>Production Model</h3>
+            <p>Capital-labor production function with energy inputs</p>
+            <ul class="detail-list">
+                <li>Cobb-Douglas production function: Y = A × K^α × L^β × E^γ</li>
+                <li>Technology parameter A varies by sector and firm size</li>
+                <li>Energy efficiency improvements through investment</li>
+                <li>Returns to scale: α + β + γ = 0.95 (slightly decreasing)</li>
+                <li>Energy elasticity: γ = 0.08 (energy-intensive sectors)</li>
+            </ul>
+            <h3>Decision Making Framework</h3>
+            <p>Policy-driven framework for capacity and efficiency decisions</p>
+            <ul class="detail-list">
+                <li>Capacity expansion when utilization > 85%</li>
+                <li>Efficiency upgrades in response to energy price changes</li>
+                <li>Capital renewal based on equipment age and performance</li>
+                <li>Investment threshold: 15% internal rate of return</li>
+                <li>Risk-adjusted discount rate: 8-12% by sector</li>
+            </ul>
+            <h3>Energy Adaptation Strategies</h3>
+            <p>Heterogeneous responses to energy price changes</p>
+            <ul class="detail-list">
+                <li>Energy efficiency: 2-5% annual improvement potential</li>
+                <li>Fuel switching: Natural gas to electricity substitution</li>
+                <li>Self-generation: On-site renewable energy systems</li>
+                <li>Process optimization: Lean manufacturing principles</li>
+                <li>Technology adoption: Industry 4.0 integration</li>
+            </ul>
+            <h3>Sectoral Characteristics</h3>
+            <p>Key differences across economic sectors</p>
+            <ul class="detail-list">
+                <li>Energy-intensive: Steel, cement, chemicals (high E/L ratio)</li>
+                <li>Manufacturing: Automotive, machinery (medium E/L ratio)</li>
+                <li>Services: IT, finance (low E/L ratio)</li>
+                <li>Construction: Building materials (medium E/L ratio)</li>
+            </ul>
+            <h3>Financial Structure</h3>
+            <p>Capital structure and financing mechanisms</p>
+            <ul class="detail-list">
+                <li>Debt-to-equity ratio: 0.3-0.8 by sector</li>
+                <li>Working capital: 15-25% of total assets</li>
+                <li>Credit rating: AAA to BBB based on size and sector</li>
+                <li>Interest coverage: 3-8x EBITDA by risk category</li>
+            </ul>
+            <h3>Market Behavior</h3>
+            <p>Competitive dynamics and market positioning</p>
+            <ul class="detail-list">
+                <li>Market share: 0.1-15% depending on sector concentration</li>
+                <li>Price setting: Cost-plus or market-based pricing</li>
+                <li>Product differentiation: Quality, innovation, service</li>
+                <li>Export orientation: 20-80% of sales by sector</li>
+            </ul>
+            <h3>Innovation & R&D</h3>
+            <p>Research and development investment patterns</p>
+            <ul class="detail-list">
+                <li>R&D intensity: 1-8% of sales by sector</li>
+                <li>Patent applications: 0.1-2.0 per firm annually</li>
+                <li>Technology adoption: 2-5 year lag for new technologies</li>
+                <li>Digital transformation: Industry 4.0 integration</li>
+            </ul>
+            <h3>Environmental Performance</h3>
+            <p>Sustainability and environmental impact</p>
+            <ul class="detail-list">
+                <li>Carbon intensity: 0.1-2.0 tCO2/€1000 revenue</li>
+                <li>Energy efficiency: 2-5% annual improvement potential</li>
+                <li>Renewable energy: 10-40% of total consumption</li>
+                <li>Circular economy: Waste reduction and recycling</li>
+            </ul>`
+    },
+    'agents-households': { 
+        t: '👥 Households', 
+        b: `<h3>Scale & Demographics</h3>
+            <p>41,039 households representing German population demographics</p>
+            <ul class="detail-list">
+                <li>Income distribution based on German household survey data</li>
+                <li>Regional distribution across 16 German states</li>
+                <li>Age and education level heterogeneity</li>
+            </ul>
+            <h3>Consumption Behavior</h3>
+            <p>Multi-sector consumption with energy-specific choices</p>
+            <ul class="detail-list">
+                <li>Consumption across 20 economic sectors</li>
+                <li>Energy consumption: electricity, heating, transportation</li>
+                <li>Price elasticity varies by income level and region</li>
+            </ul>
+            <h3>Labor Supply</h3>
+            <p>Labor market participation and wage negotiation</p>
+            <ul class="detail-list">
+                <li>Labor supply based on wage levels and unemployment</li>
+                <li>Skill level matching with firm requirements</li>
+                <li>Geographic mobility constraints</li>
+            </ul>`
+    },
+    'agents-banks': { t: '🏦 Banks', b: 'Credit & risk assessment, dynamic rates' },
+    'markets-goods': { t: '🛒 Goods Markets', b: 'Inventory, exports, price discovery' },
+    'markets-labor': { t: '👷 Labor Market', b: 'Wages, hiring, matching' },
+    'markets-financial': { t: '💹 Financial Market', b: 'Credit allocation, liquidity' },
+    'markets-energy': { t: '⚡ Energy Market', b: 'Policy, pricing, technology' },
+    'institutions-government': { t: '🏛️ Government', b: 'Fiscal & energy policy' },
+    'institutions-clearing': { t: '⚖️ Clearing House', b: 'Trade execution & settlement' },
+    'institutions-trade': { t: '🌍 Trade System', b: 'Export/import, exchange rates' },
+    'simulation-engine': { t: '🏛️ Enterprise Simulation', b: '20k+ agents, multi-market system' },
+    'decision-system': { 
+        t: '🧠 Decision System', 
+        b: `<h3>Policy-Driven Framework</h3>
+            <p>Clean separation of concerns with modular design</p>
+            <ul class="detail-list">
+                <li>DecisionEngine: Orchestrates decision processes</li>
+                <li>DecisionPolicy: Implements specific strategies</li>
+                <li>CapitalAllocator: Manages budget allocation</li>
+                <li>DecisionExecutor: Executes decisions</li>
+            </ul>
+            <h3>Investment Policies</h3>
+            <p>Sophisticated capital allocation mechanisms</p>
+            <ul class="detail-list">
+                <li>Capacity expansion (utilization > 85%)</li>
+                <li>Efficiency upgrades (step-wise improvements)</li>
+                <li>Capital renewal (equipment replacement)</li>
+            </ul>
+            <h3>Adaptive Behavior</h3>
+            <p>Learning and adaptation to changing conditions</p>
+            <ul class="detail-list">
+                <li>Performance-based strategy adjustment</li>
+                <li>Market condition adaptation</li>
+                <li>Policy response mechanisms</li>
+            </ul>`
+    },
+    'banking-system': { t: '💰 Banking System', b: 'Risk assessment, loans, dynamic rates' },
+    'market-clearing': { t: '⚖️ Market Clearing', b: 'Supply-demand matching, settlement' },
+    'energy-policy': { t: '⚡ Energy Policy', b: 'Carbon pricing, renewables, efficiency' },
+    'hpc-implementation': { t: '🖥️ HPC Implementation', b: '15m-2h runtime, G1 GC, 30GB heap' },
+    'macroeconomic-indicators': { t: '📊 Macro Indicators', b: 'GDP €4.2T, Pop 83.2M, Unemployment 5.7%' },
+    'sector-analysis': { t: '🏭 Sector Performance', b: '20 sectors: manufacturing, services, energy-intensive' },
+    'household-behavior': { t: '👥 Household Behavior', b: 'Income, consumption, energy choices' },
+    'firm-dynamics': { t: '🏢 Firm Dynamics', b: 'Capacity, efficiency, technology' },
+    'simulation-performance': { t: '⚡ Performance', b: '15m-2h runtime, G1 GC, parallel processing' },
+    'validation-results': { t: '✅ Validation', b: 'Stats verified, consistency checks, robustness tests' },
+    'data-economic-structure': { t: '📊 Economic Structure', b: '20 sectors, 72 divisions, German WZ 2008 classification' },
+    'data-regional-sectoral': { t: '🗺️ Regional Data', b: 'State indicators, NUTS2 employment, sector distribution' },
+    'data-firm-employment': { t: '🏢 Firm Data', b: 'Harmonized employment stats, firm counts, size distribution' },
+    'data-input-output': { t: '⚙️ Input-Output', b: '72x72 coefficients matrix, inter-industry relationships' },
+    'data-gdp-indicators': { t: '💰 GDP Data', b: 'Final GDP, value added by sector/state, growth rates' },
+    'data-processing': { t: '🛠️ Processing', b: 'Python tools, aggregation, 3 processing modes' },
+    'data-hierarchy': { t: '🏗️ Database Structure', b: 'Country→Region→Sector→Division→Agent hierarchy, SQLite' },
+    'data-validation': { t: '✅ Data Validation', b: 'Relationship validation, consistency checks, completeness' },
+    'data-calibration': { t: '🎯 Calibration', b: 'GDP 1.5%, Unemployment 5.5%, Inflation 2.0%, firm metrics' }
+};
