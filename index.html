@@ -70,7 +70,7 @@
                         <span style="color:#dd0000;">G</span>
                         <span style="color:#dd0000;">I</span>
                     </strong>
-                    &nbsp;is short for <em style="font-size:1.3em;">Energy transition and competitiveness: An analysis of the heterogeneous behavior of companies and its macroeconomic implications</em>.<br>
+                    &nbsp;is short for <strong style="font-size:1.3em;">Energy transition and competitiveness: An analysis of the heterogeneous behavior of companies and its macroeconomic implications</strong>.<br>
                     <span style="font-size:0.9em;">
                         <strong>German:</strong>
                         <em>
@@ -81,11 +81,7 @@
                         </em>
                     </span>
                     <br>
-                    <span style="font-size:1.05em;">
-                        <em>
-                            A Collaborative project with the Institute for Networked Energy Systems of the German Aerospace Center (DLR-VE), funded by the Federal Ministry for Economic Affairs and Energy (BMWi).
-                        </em>
-                    </span>
+
                 </div>
                 <h2>Key Objectives</h2>
                 <div class="highlight">
@@ -127,6 +123,11 @@
                             <div class="module-title">Banks</div>
                             <div class="module-desc">Central & commercial</div>
                         </div>
+                            <div class="module-box clickable" data-detail="agents-government" onclick="showDetail('agents-government')">
+                            <div class="module-icon">🏛️</div>
+                            <div class="module-title">Government</div>
+                            <div class="module-desc">Fiscal policy</div>
+                        </div>
                     </div>
                             </div>
                 
@@ -157,17 +158,12 @@
                 </div>
                  
                     <div class="module-level">
-                        <h3>Institutional Framework</h3>
+                        <h3>Core Systems</h3>
                         <div class="module-grid">
-                            <div class="module-box clickable" data-detail="institutions-government" onclick="showDetail('institutions-government')">
-                            <div class="module-icon">🏛️</div>
-                            <div class="module-title">Government</div>
-                            <div class="module-desc">Fiscal policy</div>
-                    </div>
-                            <div class="module-box clickable" data-detail="institutions-clearing" onclick="showDetail('institutions-clearing')">
-                            <div class="module-icon">🔄</div>
-                            <div class="module-title">Clearing House</div>
-                            <div class="module-desc">Transaction settlement</div>
+                            <div class="module-box clickable" data-detail="core-decision-system" onclick="showDetail('core-decision-system')">
+                            <div class="module-icon">🧠</div>
+                            <div class="module-title">Decision System</div>
+                            <div class="module-desc">Policy-driven investment framework</div>
                     </div>
                             <div class="module-box clickable" data-detail="institutions-trade" onclick="showDetail('institutions-trade')">
                             <div class="module-icon">🌍</div>
@@ -192,7 +188,7 @@
                         <div class="module-grid">
                             <div class="module-box clickable" data-detail="data-economic-structure" onclick="showDetail('data-economic-structure')">
                             <div class="module-icon">📊</div>
-                            <div class="module-title">Economic Structure</div>
+                            <div class="module-title">Macroeconomic Indicators</div>
                             <div class="module-desc">German WZ 2008 classification system</div>
                             </div>
                             <div class="module-box clickable" data-detail="data-regional-sectoral" onclick="showDetail('data-regional-sectoral')">
@@ -202,29 +198,29 @@
                             </div>
                             <div class="module-box clickable" data-detail="data-firm-employment" onclick="showDetail('data-firm-employment')">
                             <div class="module-icon">🏢</div>
-                            <div class="module-title">Firm & Employment</div>
+                            <div class="module-title">Employment & Others</div>
                             <div class="module-desc">Harmonized employment statistics</div>
                         </div>
                         </div>
                     </div>
                     
                     <div class="module-level">
-                        <h3>Technical Infrastructure</h3>
+                        <h3>Technical Implementation</h3>
                         <div class="module-grid">
-                            <div class="module-box clickable" data-detail="data-input-output" onclick="showDetail('data-input-output')">
-                            <div class="module-icon">⚙️</div>
-                            <div class="module-title">Input-Output Tables</div>
-                            <div class="module-desc">72x72 technical coefficients matrix</div>
-                            </div>
-                            <div class="module-box clickable" data-detail="data-gdp-indicators" onclick="showDetail('data-gdp-indicators')">
-                            <div class="module-icon">💰</div>
-                            <div class="module-title">GDP & Indicators</div>
-                            <div class="module-desc">Final GDP and economic indicators</div>
-                            </div>
                             <div class="module-box clickable" data-detail="data-processing" onclick="showDetail('data-processing')">
                             <div class="module-icon">🛠️</div>
                             <div class="module-title">Processing Pipeline</div>
                             <div class="module-desc">Python scripts & validation</div>
+                        </div>
+                            <div class="module-box clickable" data-detail="data-input-output" onclick="showDetail('data-input-output')">
+                            <div class="module-icon">⚙️</div>
+                            <div class="module-title">Aggregation Solutions</div>
+                            <div class="module-desc">72x72 technical coefficients matrix</div>
+                            </div>
+                            <div class="module-box clickable" data-detail="data-gdp-indicators" onclick="showDetail('data-gdp-indicators')">
+                            <div class="module-icon">💰</div>
+                            <div class="module-title">Input-Output Tables</div>
+                            <div class="module-desc">Final GDP and economic indicators</div>
                         </div>
                         </div>
                     </div>
@@ -261,49 +257,64 @@
                 <h1>Technical Highlights</h1>
                 <div class="modular-architecture">
                     <div class="module-level">
-                        <h3>Simulation Engine</h3>
+                        <h3>Core Architecture</h3>
                         <div class="module-grid">
                             <div class="module-box clickable" onclick="showDetail('simulation-engine')">
-                            <div class="module-icon">🏛️</div>
-                            <div class="module-title">Enterprise Scale</div>
-                            <div class="module-desc">20,000+ agents with realistic economic relationships</div>
+                            <div class="module-icon">🏗️</div>
+                            <div class="module-title">Agent-Based Engine</div>
+                            <div class="module-desc">Repast Symphony framework with 20,000+ heterogeneous agents</div>
                             </div>
-                            <div class="module-box clickable" onclick="showDetail('decision-system')">
-                            <div class="module-icon">🧠</div>
-                            <div class="module-title">Decision System</div>
-                            <div class="module-desc">Policy-driven framework for firm decisions</div>
+                            <div class="module-box clickable" onclick="showDetail('scaling-system')">
+                            <div class="module-icon">⚖️</div>
+                            <div class="module-title">Scaling System</div>
+                            <div class="module-desc">SIM/REAL scale conversion with automatic upscaling</div>
+                        </div>
+                            <div class="module-box clickable" onclick="showDetail('memory-management')">
+                            <div class="module-icon">🧮</div>
+                            <div class="module-title">Memory Management</div>
+                            <div class="module-desc">G1 garbage collection with 30GB optimization</div>
                         </div>
                     </div>
                             </div>
     
                     <div class="module-level">
-                        <h3>Financial Infrastructure</h3>
+                        <h3>Data & Processing</h3>
                         <div class="module-grid">
-                            <div class="module-box clickable" onclick="showDetail('banking-system')">
-                            <div class="module-icon">💰</div>
-                            <div class="module-title">Banking System</div>
-                            <div class="module-desc">Sophisticated credit and lending mechanisms</div>
+                            <div class="module-box clickable" onclick="showDetail('database-architecture')">
+                            <div class="module-icon">🗄️</div>
+                            <div class="module-title">Database Architecture</div>
+                            <div class="module-desc">SQLite backend with hierarchical data organization</div>
                             </div>
-                            <div class="module-box clickable" onclick="showDetail('market-clearing')">
-                            <div class="module-icon">⚖️</div>
-                            <div class="module-title">Market Clearing</div>
-                            <div class="module-desc">Automated price discovery and trade execution</div>
+                            <div class="module-box clickable" onclick="showDetail('data-flow')">
+                            <div class="module-icon">🔄</div>
+                            <div class="module-title">Data Flow Management</div>
+                            <div class="module-desc">Real-time data streaming and pipeline orchestration</div>
+                        </div>
+                            <div class="module-box clickable" onclick="showDetail('result-visualization')">
+                            <div class="module-icon">📊</div>
+                            <div class="module-title">Result Visualization</div>
+                            <div class="module-desc">Automated data export and visualization for HPC execution</div>
                         </div>
                         </div>
                     </div>
                     
                     <div class="module-level">
-                        <h3>Energy & Policy</h3>
+                        <h3>HPC & Performance</h3>
                         <div class="module-grid">
-                            <div class="module-box clickable" onclick="showDetail('energy-policy')">
-                            <div class="module-icon">⚡</div>
-                            <div class="module-title">Energy Policy</div>
-                            <div class="module-desc">Specialized energy decision-making behavior</div>
-                            </div>
                             <div class="module-box clickable" onclick="showDetail('hpc-implementation')">
                             <div class="module-icon">🖥️</div>
                             <div class="module-title">HPC Implementation</div>
-                            <div class="module-desc">Production-ready cluster deployment</div>
+                            <div class="module-desc">Production-ready Slurm cluster deployment</div>
+                            </div>
+                            <div class="module-box clickable" onclick="showDetail('parameter-sweep')">
+                            <div class="module-icon">🔄</div>
+                            <div class="module-title">Parameter Sweep</div>
+                            <div class="module-desc">Automated parameter exploration with array jobs</div>
+                        </div>
+                            <div class="module-box clickable" onclick="showDetail('performance-optimization')">
+                            <div class="module-icon">🚀</div>
+                            <div class="module-title">Performance Optimization</div>
+                            <div class="module-desc">Multi-threading and parallel processing optimization</div>
                         </div>
                         </div>
                     </div>
@@ -387,6 +398,68 @@
                     <!-- Local data payload for optional interactive chart (used only if Chart.js is available locally) -->
                     <script id="macro-data" type="application/json">{"labels":["t1","t2","t3","t4","t5","t6","t7"],"series":{"GDP":[100,103,107,110,114,118,121],"Inflation":[2.0,2.2,1.9,1.8,2.1,2.3,2.0],"Unemployment":[6.2,6.1,6.0,5.9,5.8,5.7,5.6]}}</script>
                     <noscript><div class="label" style="margin-top:8px;color:#64748b">JavaScript disabled: interactive chart unavailable.</div></noscript>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detail: Decision System -->
+        <div id="detail-core-decision-system" class="detail-page" style="display:none">
+            <div class="detail-content">
+                <div class="detail-header">
+                    <h2 class="detail-title">🧠 Decision System</h2>
+                    <button class="detail-close" onclick="hideDetail()">Close</button>
+                </div>
+                <div class="detail-section">
+                    <h3>System Architecture</h3>
+                    <p>The EWaGI Decision System is a sophisticated framework that enables firms to make strategic investment and operational decisions through a policy-driven, multi-stage evaluation process.</p>
+                    <ul class="detail-list">
+                        <li><strong>DecisionEngine:</strong> Central orchestrator coordinating the entire decision-making process</li>
+                        <li><strong>DecisionPolicy:</strong> Strategy implementations that generate investment proposals</li>
+                        <li><strong>CapitalAllocator:</strong> Budget allocation logic selecting proposals within constraints</li>
+                        <li><strong>DecisionExecutor:</strong> Execution engine applying approved decisions</li>
+                        <li><strong>DecisionContext:</strong> Contextual information passed between components</li>
+                    </ul>
+                </div>
+                <div class="detail-section">
+                    <h3>Policy-Driven Decision Making</h3>
+                    <p>The system operates on the principle of policy-driven decision making, where different business strategies are encapsulated as independent DecisionPolicy implementations.</p>
+                    <ul class="detail-list">
+                        <li><strong>CapacityExpansionPolicy:</strong> Evaluates opportunities for expanding production capacity when utilization exceeds 85%</li>
+                        <li><strong>EfficiencyUpgradePolicy:</strong> Identifies opportunities for energy efficiency improvements with step-wise upgrades</li>
+                        <li><strong>CapitalRenewalPolicy:</strong> Equipment replacement decisions (framework ready)</li>
+                        <li><strong>ProcessRDPolicy:</strong> Process innovation investments (framework ready)</li>
+                        <li><strong>ProductRDPolicy:</strong> Product development investments (framework ready)</li>
+                    </ul>
+                </div>
+                <div class="detail-section">
+                    <h3>Decision Flow Process</h3>
+                    <p>The decision-making process follows a clean separation of concerns with distinct phases:</p>
+                    <ol style="color:#e2e8f0;margin-left:20px;line-height:1.6;">
+                        <li><strong>Policy Evaluation:</strong> Each policy evaluates the current economic context</li>
+                        <li><strong>Proposal Generation:</strong> Policies generate relevant investment proposals</li>
+                        <li><strong>Capital Allocation:</strong> GreedyAllocator selects proposals by NPV ranking within budget constraints</li>
+                        <li><strong>Decision Execution:</strong> Approved decisions are applied to simulation state</li>
+                        <li><strong>State Update:</strong> Changes are reflected in firm's financial and operational systems</li>
+                    </ol>
+                </div>
+                <div class="detail-section">
+                    <h3>Economic Integration</h3>
+                    <p>The system maintains economic consistency through proper scaling conventions and financial integration:</p>
+                    <ul class="detail-list">
+                        <li><strong>Scaling Awareness:</strong> Handles both SIM and REAL scale calculations using SIMULATION_SCALE_RATIO</li>
+                        <li><strong>NPV Calculations:</strong> 36-period discounted cash flow analysis for capacity expansion, 24-period for efficiency upgrades</li>
+                        <li><strong>Financial Integration:</strong> Properly books investments in firm accounts using FinanceUtils</li>
+                        <li><strong>Market Integration:</strong> Uses current market prices for cost calculations and WACC for discounting</li>
+                    </ul>
+                </div>
+                <div class="detail-section">
+                    <h3>Key Features</h3>
+                    <ul class="detail-list">
+                        <li><strong>Modular Design:</strong> Easy to add/remove policies without affecting others</li>
+                        <li><strong>Extensible Framework:</strong> Clean interfaces for custom policy implementation</li>
+                        <li><strong>Performance Optimized:</strong> Stream processing and early termination for efficiency</li>
+                        <li><strong>Economic Validation:</strong> Comprehensive testing strategy including unit, integration, and scenario tests</li>
+                    </ul>
                 </div>
             </div>
         </div>
