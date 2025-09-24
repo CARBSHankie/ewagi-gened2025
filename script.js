@@ -318,11 +318,29 @@ function showDetail(detailId) {
                 return r.text();
             })
             .then(html => {
-                // Inject fetched HTML into modal body
-                if (bodyEl) bodyEl.innerHTML = html;
-                // If the fetched content includes a wrapper, prefer its inner content
-                const fetchedRoot = bodyEl.querySelector(`#detail-${detailId} .detail-content`) || bodyEl.querySelector('.detail-content');
-                if (fetchedRoot) bodyEl.innerHTML = fetchedRoot.outerHTML;
+                // Parse fetched HTML in a detached container to avoid duplicating IDs
+                const temp = document.createElement('div');
+                temp.innerHTML = html;
+
+                // Prefer inner .detail-content; ignore outer wrappers with IDs
+                const fetchedRoot = temp.querySelector(`#detail-${detailId} .detail-content`) || temp.querySelector('.detail-content') || temp;
+
+                // Extract title from fetched content, if present, and use the modal's single header
+                const fetchedTitle = fetchedRoot.querySelector('.detail-title');
+                if (titleEl && fetchedTitle && fetchedTitle.textContent) {
+                    titleEl.textContent = fetchedTitle.textContent.trim();
+                }
+
+                // Remove any header/close inside fetched content to prevent duplicate controls
+                const fetchedHeader = fetchedRoot.querySelector('.detail-header');
+                if (fetchedHeader) fetchedHeader.remove();
+
+                // Per project rule: avoid injecting elements with IDs into modals to prevent conflicts
+                fetchedRoot.querySelectorAll('[id]')
+                    .forEach(el => el.removeAttribute('id'));
+
+                // Inject only the inner HTML of fetched content under the modal body
+                if (bodyEl) bodyEl.innerHTML = fetchedRoot.innerHTML;
 
                 // Initialize dynamic content as needed
                 if (detailId === 'macroeconomic-indicators') setTimeout(initMacroChart, 50);
