@@ -1,0 +1,37 @@
+<div id="detail-macroeconomic-indicators">
+    <div class="detail-content">
+        <div class="detail-header">
+            <h2 class="detail-title">📊 Macroeconomic Indicators</h2>
+            <button class="detail-close" onclick="hideDetail()">Close</button>
+        </div>
+        <div class="detail-section">
+            <h3>Simulation Results</h3>
+            <div style="height:240px;background:#fff;border:1px solid rgba(52,152,219,.25);border-radius:8px;padding:8px">
+                <canvas id="macroChart"></canvas>
+            </div>
+            <!-- Local data payload for optional interactive chart (used only if Chart.js is available locally) -->
+            <script id="macro-data" type="application/json">{"labels":["t1","t2","t3","t4","t5","t6","t7"],"series":{"GDP":[100,103,107,110,114,118,121],"Inflation":[2.0,2.2,1.9,1.8,2.1,2.3,2.0],"Unemployment":[6.2,6.1,6.0,5.9,5.8,5.7,5.6]}}</script>
+            <noscript><div class="label" style="margin-top:8px;color:#64748b">JavaScript disabled: interactive chart unavailable.</div></noscript>
+        </div>
+        <div class="detail-section">
+            <h3>Key Economic Metrics</h3>
+            <p>GDP, inflation, unemployment, and growth metrics</p>
+            <ul class="detail-list">
+                <li>GDP: €4.2 trillion total economic output</li>
+                <li>Population: 83.2 million residents</li>
+                <li>Unemployment: 5.7% baseline rate</li>
+                <li>Inflation: 2.0% target rate</li>
+            </ul>
+        </div>
+        <div class="detail-section">
+            <h3>Economic Performance</h3>
+            <p>Growth trends and economic stability indicators</p>
+            <ul class="detail-list">
+                <li>GDP growth: 1.5% baseline rate</li>
+                <li>Economic stability and resilience</li>
+                <li>Productivity growth and efficiency gains</li>
+                <li>International competitiveness indicators</li>
+            </ul>
+        </div>
+    </div>
+</div>
