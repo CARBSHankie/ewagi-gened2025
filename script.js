@@ -399,16 +399,29 @@ function initMacroChart() {
         return;
     }
     
-    // Find the visible canvas in the modal (not the hidden static one)
+    // Find the visible canvas in any modal
     let canvas = null;
+    
+    // First try the dynamic modal
     const modal = document.getElementById('detail-modal');
     if (modal && modal.style.display !== 'none') {
-        canvas = modal.querySelector('#macroChart');
+        canvas = modal.querySelector('.macro-chart, #macroChart');
+    }
+    
+    // Then try any detail page that might be visible
+    if (!canvas) {
+        const detailPages = document.querySelectorAll('.detail-page');
+        for (const page of detailPages) {
+            if (page.style.display !== 'none' && page.style.visibility !== 'hidden') {
+                canvas = page.querySelector('.macro-chart, #macroChart');
+                if (canvas) break;
+            }
+        }
     }
     
     // Fallback: find any visible canvas with the macroChart id
     if (!canvas) {
-        const canvases = document.querySelectorAll('#macroChart');
+        const canvases = document.querySelectorAll('.macro-chart, #macroChart');
         for (const c of canvases) {
             if (c.offsetParent !== null && c.clientWidth > 0) {
                 canvas = c;
@@ -469,7 +482,16 @@ function initMacroChart() {
         .then(rows => render(datasetFromCSV(rows)))
         .catch((err) => {
             console.warn('CSV fetch failed:', err.message);
-            const dataEl = document.getElementById('macro-data');
+            // Look for data script in any modal or detail page
+            let dataEl = document.querySelector('.macro-data, #macro-data');
+            if (!dataEl) {
+                // Try to find it in any detail page
+                const detailPages = document.querySelectorAll('.detail-page');
+                for (const page of detailPages) {
+                    dataEl = page.querySelector('.macro-data, #macro-data');
+                    if (dataEl) break;
+                }
+            }
             if (!dataEl) return;
             try {
                 const payload = JSON.parse(dataEl.textContent);
