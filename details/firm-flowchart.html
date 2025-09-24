@@ -1,0 +1,359 @@
+<style>
+    .flowchart-container {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 12px;
+        padding: 20px;
+        margin: 20px 0;
+        overflow-x: auto;
+        min-height: 600px;
+    }
+    
+    .flowchart {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-width: 1200px;
+    }
+    
+    .phase-group {
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        border-left: 4px solid;
+    }
+    
+    .phase-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #2c3e50;
+    }
+    
+    .phase-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .flow-item {
+        background: #fff;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        padding: 8px 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 14px;
+        position: relative;
+        min-width: 120px;
+        text-align: center;
+    }
+    
+    .flow-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10;
+    }
+    
+    .flow-item .priority {
+        font-size: 12px;
+        color: #666;
+        font-weight: bold;
+    }
+    
+    .flow-item .description {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #2c3e50;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        z-index: 20;
+    }
+    
+    .flow-item:hover .description {
+        opacity: 1;
+    }
+    
+    .flow-item.market { border-color: #0099ff; background: #e6f3ff; }
+    .flow-item.production { border-color: #28a745; background: #e8f5e8; }
+    .flow-item.rnd { border-color: #dc3545; background: #ffeaea; }
+    .flow-item.finance { border-color: #6f42c1; background: #f0e6ff; }
+    .flow-item.hr { border-color: #fd7e14; background: #fff4e6; }
+    
+    .firm-hierarchy {
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+    
+    .hierarchy-level {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        margin: 10px 0;
+    }
+    
+    .hierarchy-item {
+        background: #fff;
+        border: 2px solid #333;
+        border-radius: 8px;
+        padding: 10px 15px;
+        font-weight: bold;
+        text-align: center;
+        min-width: 100px;
+    }
+    
+    .hierarchy-item.firm { background: #e1f5fe; border-color: #01579b; font-size: 16px; }
+    .hierarchy-item.hq { background: #f3e5f5; border-color: #4a148c; font-size: 14px; }
+    .hierarchy-item.dept { background: #e8f5e8; border-color: #1b5e20; font-size: 12px; }
+    
+    .flow-arrows {
+        text-align: center;
+        margin: 10px 0;
+        font-size: 24px;
+        color: #666;
+    }
+    
+    .phase-group.planning { border-left-color: #28a745; }
+    .phase-group.financial { border-left-color: #6f42c1; }
+    .phase-group.labor { border-left-color: #fd7e14; }
+    .phase-group.supply { border-left-color: #17a2b8; }
+    .phase-group.production { border-left-color: #28a745; }
+    .phase-group.innovation { border-left-color: #dc3545; }
+</style>
+
+<div class="flowchart-container">
+    <div class="flowchart">
+        <!-- Firm Hierarchy -->
+        <div class="firm-hierarchy">
+            <div class="hierarchy-level">
+                <div class="hierarchy-item firm">🏢 Firm</div>
+            </div>
+            <div class="flow-arrows">↓</div>
+            <div class="hierarchy-level">
+                <div class="hierarchy-item hq">🏛️ Headquarters</div>
+            </div>
+            <div class="flow-arrows">↓</div>
+            <div class="hierarchy-level">
+                <div class="hierarchy-item dept">🏭 Production</div>
+                <div class="hierarchy-item dept">💰 Finance</div>
+                <div class="hierarchy-item dept">📊 Marketing</div>
+                <div class="hierarchy-item dept">🔬 R&D</div>
+                <div class="hierarchy-item dept">👥 HR</div>
+            </div>
+        </div>
+        
+        <!-- Planning Phase -->
+        <div class="phase-group planning">
+            <div class="phase-title">📋 Planning Phase (Priority: 95-75)</div>
+            <div class="phase-items">
+                <div class="flow-item market">
+                    <div>Pricing</div>
+                    <div class="priority">(95)</div>
+                    <div class="description">Set product prices based on market conditions and cost structure</div>
+                </div>
+                <div class="flow-item production">
+                    <div>Compute Planned Output</div>
+                    <div class="priority">(90)</div>
+                    <div class="description">Calculate planned production based on demand forecasts</div>
+                </div>
+                <div class="flow-item production">
+                    <div>Choose Suppliers 1</div>
+                    <div class="priority">(80)</div>
+                    <div class="description">Select primary suppliers for input materials</div>
+                </div>
+                <div class="flow-item rnd">
+                    <div>R&D Planning</div>
+                    <div class="priority">(80)</div>
+                    <div class="description">Plan research and development activities</div>
+                </div>
+                <div class="flow-item production">
+                    <div>Allocate Planned Output</div>
+                    <div class="priority">(76)</div>
+                    <div class="description">Distribute planned output across markets</div>
+                </div>
+                <div class="flow-item production">
+                    <div>Compute Input Demand</div>
+                    <div class="priority">(75)</div>
+                    <div class="description">Calculate required input materials</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Financial Operations Phase -->
+        <div class="phase-group financial">
+            <div class="phase-title">💰 Financial Operations Phase (Priority: 70-64)</div>
+            <div class="phase-items">
+                <div class="flow-item finance">
+                    <div>Financial Planning</div>
+                    <div class="priority">(70)</div>
+                    <div class="description">Develop financial strategy and budget</div>
+                </div>
+                <div class="flow-item finance">
+                    <div>Credit Application</div>
+                    <div class="priority">(69)</div>
+                    <div class="description">Apply for credit from financial institutions</div>
+                </div>
+                <div class="flow-item finance">
+                    <div>Choose Credit Offers</div>
+                    <div class="priority">(67)</div>
+                    <div class="description">Select best credit terms from available offers</div>
+                </div>
+                <div class="flow-item finance">
+                    <div>Financial Status</div>
+                    <div class="priority">(66)</div>
+                    <div class="description">Assess current financial position</div>
+                </div>
+                <div class="flow-item finance">
+                    <div>Interest Payments</div>
+                    <div class="priority">(65)</div>
+                    <div class="description">Process interest payments on debt</div>
+                </div>
+                <div class="flow-item finance">
+                    <div>Debt Restructuring</div>
+                    <div class="priority">(65)</div>
+                    <div class="description">Restructure debt if needed</div>
+                </div>
+                <div class="flow-item production">
+                    <div>Replanning Production</div>
+                    <div class="priority">(64)</div>
+                    <div class="description">Adjust production plans based on financial constraints</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Labor & Resource Allocation Phase -->
+        <div class="phase-group labor">
+            <div class="phase-title">👥 Labor & Resource Allocation Phase (Priority: 60-56)</div>
+            <div class="phase-items">
+                <div class="flow-item hr">
+                    <div>Labor Market Activities</div>
+                    <div class="priority">(60)</div>
+                    <div class="description">Engage in labor market for hiring</div>
+                </div>
+                <div class="flow-item production">
+                    <div>ReAllocate Planned Output</div>
+                    <div class="priority">(59)</div>
+                    <div class="description">Adjust output allocation based on labor availability</div>
+                </div>
+                <div class="flow-item hr">
+                    <div>Labor Market Activities 2</div>
+                    <div class="priority">(56)</div>
+                    <div class="description">Continue labor market engagement</div>
+                </div>
+                <div class="flow-item production">
+                    <div>Input Order Round 1</div>
+                    <div class="priority">(56)</div>
+                    <div class="description">Place first round of input orders</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Supply Chain Phase -->
+        <div class="phase-group supply">
+            <div class="phase-title">🚚 Supply Chain Phase (Priority: 50-46)</div>
+            <div class="phase-items">
+                <div class="flow-item production">
+                    <div>Input Delivery Round1</div>
+                    <div class="priority">(50)</div>
+                    <div class="description">Receive first round of input deliveries</div>
+                </div>
+                <div class="flow-item production">
+                    <div>Choose Supplier 2</div>
+                    <div class="priority">(49)</div>
+                    <div class="description">Select secondary suppliers</div>
+                </div>
+                <div class="flow-item production">
+                    <div>Input Order Round 2</div>
+                    <div class="priority">(48)</div>
+                    <div class="description">Place second round of input orders</div>
+                </div>
+                <div class="flow-item production">
+                    <div>Input Delivery Round2</div>
+                    <div class="priority">(46)</div>
+                    <div class="description">Receive second round of input deliveries</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Production & Delivery Phase -->
+        <div class="phase-group production">
+            <div class="phase-title">🏭 Production & Delivery Phase (Priority: 42-35)</div>
+            <div class="phase-items">
+                <div class="flow-item production">
+                    <div>Production</div>
+                    <div class="priority">(42)</div>
+                    <div class="description">Execute production processes</div>
+                </div>
+                <div class="flow-item hr">
+                    <div>Pay Wages</div>
+                    <div class="priority">(41)</div>
+                    <div class="description">Process wage payments to employees</div>
+                </div>
+                <div class="flow-item production">
+                    <div>Capital Stock Adjustment</div>
+                    <div class="priority">(40)</div>
+                    <div class="description">Update capital stock levels</div>
+                </div>
+                <div class="flow-item production">
+                    <div>Manage Energy Costs</div>
+                    <div class="priority">(40)</div>
+                    <div class="description">Optimize energy consumption and costs</div>
+                </div>
+                <div class="flow-item production">
+                    <div>Output Delivery</div>
+                    <div class="priority">(35)</div>
+                    <div class="description">Deliver outputs to markets</div>
+                </div>
+                <div class="flow-item production">
+                    <div>Market Delivery</div>
+                    <div class="priority">(35)</div>
+                    <div class="description">Complete market transactions</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Innovation & Accounting Phase -->
+        <div class="phase-group innovation">
+            <div class="phase-title">💡 Innovation & Accounting Phase (Priority: 30-25)</div>
+            <div class="phase-items">
+                <div class="flow-item rnd">
+                    <div>Process Innovation</div>
+                    <div class="priority">(30)</div>
+                    <div class="description">Implement process improvements</div>
+                </div>
+                <div class="flow-item rnd">
+                    <div>Product Innovation</div>
+                    <div class="priority">(30)</div>
+                    <div class="description">Develop new products</div>
+                </div>
+                <div class="flow-item hr">
+                    <div>Skills Update</div>
+                    <div class="priority">(29)</div>
+                    <div class="description">Update employee skills and training</div>
+                </div>
+                <div class="flow-item production">
+                    <div>Productivity Adjustment</div>
+                    <div class="priority">(28)</div>
+                    <div class="description">Adjust productivity based on innovations</div>
+                </div>
+                <div class="flow-item finance">
+                    <div>Accounting</div>
+                    <div class="priority">(25)</div>
+                    <div class="description">Complete accounting and reporting</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

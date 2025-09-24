@@ -240,6 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
         slides[0].classList.add('active');
         currentSlide = 0;
     }
+    
 });
 
 document.addEventListener('click', function(e) {
@@ -344,11 +345,12 @@ function showDetail(detailId) {
 
                 // Initialize dynamic content as needed
                 if (detailId === 'macroeconomic-indicators') setTimeout(initMacroChart, 50);
+                
             })
             .catch(() => {
                 // Fallback for missing detail files
-                if (titleEl) titleEl.textContent = 'Details';
-                if (bodyEl) bodyEl.innerHTML = '<div style="padding:16px">Details not available.</div>';
+                    if (titleEl) titleEl.textContent = 'Details';
+                    if (bodyEl) bodyEl.innerHTML = '<div style="padding:16px">Details not available.</div>';
             })
             .finally(() => {
                 modal.style.display = 'block';
@@ -510,3 +512,53 @@ function initMacroChart() {
 }
 
 // DETAIL_MAP removed - all detail files now exist in details/ folder
+
+// ===== Global tooltip helpers (used by dynamically loaded detail HTML) =====
+(function registerGlobalTooltips() {
+    if (window.showTooltip && window.hideTooltip) return;
+
+    function ensureTooltipStylesInjected() {
+        if (document.querySelector('style[data-ewagi-tooltips]')) return;
+        const style = document.createElement('style');
+        style.setAttribute('data-ewagi-tooltips', '');
+        style.textContent = `
+            .ewagi-tooltip{position:fixed;background:rgba(0,0,0,.9);color:#fff;padding:12px 16px;border-radius:8px;font-size:13px;max-width:320px;z-index:2147483650;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.3);opacity:0;transform:translateY(-4px);transition:opacity .12s ease,transform .12s ease}
+            .ewagi-tooltip.show{opacity:1;transform:translateY(0)}
+            .ewagi-tooltip .title{font-weight:700;margin-bottom:6px;color:#ffd700}
+        `;
+        document.head.appendChild(style);
+    }
+
+    window.showTooltip = function showTooltip(event, title, content) {
+        try {
+            window.hideTooltip();
+            ensureTooltipStylesInjected();
+
+            const tooltip = document.createElement('div');
+            tooltip.className = 'ewagi-tooltip';
+            tooltip.innerHTML = `<div class="title">${title || ''}</div><div>${content || ''}</div>`;
+            document.body.appendChild(tooltip);
+
+            const target = event.currentTarget || event.target;
+            const rect = target.getBoundingClientRect();
+            const tRect = tooltip.getBoundingClientRect();
+
+            let left = rect.left + rect.width / 2 - tRect.width / 2;
+            let top = rect.top - tRect.height - 10;
+
+            if (left < 10) left = 10;
+            if (left + tRect.width > window.innerWidth - 10) left = window.innerWidth - tRect.width - 10;
+            if (top < 10) top = rect.bottom + 10;
+
+            tooltip.style.left = `${Math.round(left)}px`;
+            tooltip.style.top = `${Math.round(top)}px`;
+
+            requestAnimationFrame(() => tooltip.classList.add('show'));
+        } catch (_) {}
+    };
+
+    window.hideTooltip = function hideTooltip() {
+        const existing = document.querySelector('.ewagi-tooltip');
+        if (existing) existing.remove();
+    };
+})();
