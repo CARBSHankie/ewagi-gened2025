@@ -5,33 +5,30 @@
             <button class="detail-close" onclick="hideDetail()">Close</button>
         </div>
         <div class="detail-section">
-            <h3>Comprehensive Data Validation</h3>
-            <p>Relationship validation, consistency checks, completeness</p>
+            <h3>Validation Framework</h3>
+            <p>How data quality is ensured in the EWaGI database</p>
             <ul class="detail-list">
-                <li>Comprehensive data validation and quality assurance</li>
-                <li>Relationship validation and consistency checks</li>
-                <li>Data completeness and accuracy verification</li>
-                <li>Automated error detection and correction</li>
+                <li><strong>DatabaseStatsReporter</strong>: Automated validation after data insertion</li>
+                <li><strong>Employment share validation</strong>: Ensures regional distribution sums to 1.0</li>
+                <li><strong>Foreign key validation</strong>: Cross-entity relationship integrity checks</li>
             </ul>
         </div>
         <div class="detail-section">
-            <h3>Quality Assurance</h3>
-            <p>Data quality metrics and validation procedures</p>
+            <h3>Validation Checks</h3>
+            <p>What specific validations are performed</p>
             <ul class="detail-list">
-                <li>Statistical validation against official sources</li>
-                <li>Cross-validation with multiple data sources</li>
-                <li>Outlier detection and data cleaning procedures</li>
-                <li>Quality metrics and performance indicators</li>
+                <li><strong>Country-level statistics</strong>: GDP, population, unemployment verification</li>
+                <li><strong>Regional aggregation</strong>: Sum of regional data equals national totals</li>
+                <li><strong>Economic consistency</strong>: Production values align with GDP expectations</li>
             </ul>
         </div>
         <div class="detail-section">
-            <h3>Consistency Checks</h3>
-            <p>Data consistency and integrity verification</p>
+            <h3>Validation Output</h3>
+            <p>What validation results provide for users</p>
             <ul class="detail-list">
-                <li>Cross-level consistency checks</li>
-                <li>Temporal consistency and trend analysis</li>
-                <li>Logical consistency and business rule validation</li>
-                <li>Data integrity and referential consistency</li>
+                <li><strong>Automated reports</strong>: Timestamped markdown reports in output/database_report/</li>
+                <li><strong>Data completeness</strong>: NULL value detection and missing data identification</li>
+                <li><strong>Quality assurance</strong>: Confidence in simulation baseline data integrity</li>
             </ul>
         </div>
     </div>

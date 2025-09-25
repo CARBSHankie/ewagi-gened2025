@@ -1,0 +1,37 @@
+<div id="detail-data-aggregate-solution">
+    <div class="detail-content">
+        <div class="detail-header">
+            <h2 class="detail-title">⚙️ Aggregation Solutions</h2>
+            <button class="detail-close" onclick="hideDetail()">Close</button>
+        </div>
+        <div class="detail-section">
+            <h3>Technical Coefficients Implementation</h3>
+            <p>Real-world input-output relationships at division level</p>
+            <ul class="detail-list">
+                <li><strong>Matrix structure</strong>: 72x72 technical coefficients from real IO tables</li>
+                <li><strong>Data source</strong>: German input-output tables (latest available year)</li>
+                <li><strong>Storage</strong>: TECHNICAL_COEFFICIENTS table with fromSectorID, toSectorID, coefficient</li>
+            </ul>
+        </div>
+        <div class="detail-section">
+            <h3>Division-Level Aggregation</h3>
+            <p>Sophisticated distribution from sector to division level</p>
+            <ul class="detail-list">
+                <li><strong>Remainder-aware distribution</strong>: Ensures all agents allocated without loss</li>
+                <li><strong>Fallback mechanism</strong>: Production value fallback for sectors with zero values</li>
+                <li><strong>Economic consistency</strong>: GDP and employment share validation</li>
+            </ul>
+        </div>
+        <div class="detail-section">
+            <h3>Regional Distribution Algorithm</h3>
+            <p>Multi-level data organization and regional allocation</p>
+            <ul class="detail-list">
+                <li><strong>Nested structure</strong>: sectorData[countryID][regionID][sectorID] organization</li>
+                <li><strong>Employment validation</strong>: Real NUTS-2 data ensures shares sum to 1.0</li>
+                <li><strong>Rounding adjustment</strong>: Three largest regions handle remainder discrepancies</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
