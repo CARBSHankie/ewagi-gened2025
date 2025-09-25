@@ -305,6 +305,13 @@ function showDetail(detailId) {
         if (detailId === 'markets-energy') {
             setTimeout(() => initEnergyPricingWidget(detailPage), 30);
         }
+        if (detailId === 'core-decision-system') {
+            setTimeout(() => {
+                if (window.initDecisionProcessWidget) {
+                    window.initDecisionProcessWidget();
+                }
+            }, 30);
+        }
     } else {
         // Try to lazy-load external detail file
         const modal = ensureDetailModal();
@@ -348,6 +355,11 @@ function showDetail(detailId) {
                 // Initialize dynamic content as needed
                 if (detailId === 'macroeconomic-indicators') setTimeout(initMacroChart, 50);
                 if (detailId === 'markets-energy') setTimeout(() => initEnergyPricingWidget(bodyEl || document), 30);
+                if (detailId === 'core-decision-system') setTimeout(() => {
+                    if (window.initDecisionProcessWidget) {
+                        window.initDecisionProcessWidget();
+                    }
+                }, 30);
                 
             })
             .catch(() => {
@@ -674,4 +686,191 @@ function initEnergyPricingWidget(root) {
         const existing = document.querySelector('.ewagi-tooltip');
         if (existing) existing.remove();
     };
+
+    // Decision Process Widget Initialization
+    window.initDecisionProcessWidget = function initDecisionProcessWidget() {
+        const container = document.querySelector('.decision-process-widget');
+        if (!container) return;
+
+        const energyPriceSlider = container.querySelector('.dp-energy-price');
+        const interestRateSlider = container.querySelector('.dp-interest-rate');
+        const budgetSlider = container.querySelector('.dp-budget');
+        
+        const energyPriceVal = container.querySelector('.dp-energy-price-val');
+        const interestRateVal = container.querySelector('.dp-interest-rate-val');
+        const budgetVal = container.querySelector('.dp-budget-val');
+
+        const energyStatus = container.querySelector('.dp-energy-status');
+        const proposalsCount = container.querySelector('.dp-proposals-count');
+        const selectedCount = container.querySelector('.dp-selected-count');
+        const investmentTotal = container.querySelector('.dp-investment-total');
+        const roi = container.querySelector('.dp-roi');
+
+        const totalInvestment = container.querySelector('.dp-total-investment');
+        const budgetUsed = container.querySelector('.dp-budget-used');
+        const expectedROI = container.querySelector('.dp-expected-roi');
+
+        // Step elements for staged visualization
+        const stepEl1 = container.querySelector('.dp-step-1');
+        const stepEl2 = container.querySelector('.dp-step-2');
+        const stepEl3 = container.querySelector('.dp-step-3');
+        const stepEl4 = container.querySelector('.dp-step-4');
+        const stepEl5 = container.querySelector('.dp-step-5');
+
+        // Staging helpers
+        let sequenceTimers = [];
+        function clearSequenceTimers() {
+            sequenceTimers.forEach(t => clearTimeout(t));
+            sequenceTimers = [];
+        }
+        function setStepState(step, state) {
+            if (!step) return;
+            const titleEl = step.querySelector('div');
+            if (state === 'inactive') {
+                step.style.borderColor = '#e5e7eb';
+                if (titleEl) titleEl.style.color = '#6b7280';
+            } else if (state === 'active') {
+                step.style.borderColor = '#3b82f6';
+                if (titleEl) titleEl.style.color = '#3b82f6';
+            } else if (state === 'done') {
+                step.style.borderColor = '#10b981';
+                if (titleEl) titleEl.style.color = '#10b981';
+            }
+        }
+        function resetSteps() {
+            setStepState(stepEl1, 'inactive');
+            setStepState(stepEl2, 'inactive');
+            setStepState(stepEl3, 'inactive');
+            setStepState(stepEl4, 'inactive');
+            setStepState(stepEl5, 'inactive');
+        }
+
+        function updateDecisionProcess() {
+            // cancel any in-flight staged updates
+            clearSequenceTimers();
+            const energyPrice = Number(energyPriceSlider.value);
+            const interestRate = Number(interestRateSlider.value);
+            const budget = Number(budgetSlider.value);
+
+            // Update slider value displays
+            energyPriceVal.textContent = energyPrice.toString();
+            interestRateVal.textContent = interestRate.toFixed(1);
+            budgetVal.textContent = budget.toString();
+
+            // Determine market analysis label (applied in stage 1)
+            const energyLevel = energyPrice > 150 ? 'Very High' : energyPrice > 120 ? 'High' : energyPrice > 90 ? 'Medium' : 'Low';
+
+            // Calculate investment proposals based on energy price
+            // Simple NPV responsiveness (illustrative):
+            // Efficiency becomes more attractive when energy price rises, and when rates fall
+            const efficiencyNPV = (energyPrice > 100 ? 12.5 + (energyPrice - 100) * 0.1 : 8.5) * (1 - (interestRate - 1) * 0.03);
+            // Capacity becomes less attractive at high energy price and high rates
+            const capacityNPV = (18.2 - (energyPrice - 100) * 0.05) * (1 - (interestRate - 1) * 0.04);
+            const renewalNPV = 8.7 * (1 - (interestRate - 1) * 0.02);
+
+            // Proposal rows
+            const efficiencyRow = container.querySelector('[data-type="efficiency"]');
+            const capacityRow = container.querySelector('[data-type="capacity"]');
+            const renewalRow = container.querySelector('[data-type="renewal"]');
+
+            // Budget allocation logic (costs can be edited in the table)
+            const getCost = (type, fallback) => {
+                const input = container.querySelector(`.dp-cost-input[data-type="${type}"]`);
+                const v = input ? Number(input.value) : NaN;
+                return Number.isFinite(v) && v >= 0 ? v : fallback;
+            };
+            const efficiencyCost = getCost('efficiency', 8);
+            const capacityCost = getCost('capacity', 15);
+            const renewalCost = getCost('renewal', 12);
+
+            let selectedInvestments = [];
+            let totalCost = 0;
+
+            // Sort by NPV and select within budget
+            const investments = [
+                { type: 'efficiency', cost: efficiencyCost, npv: efficiencyNPV, row: efficiencyRow },
+                { type: 'capacity', cost: capacityCost, npv: capacityNPV, row: capacityRow },
+                { type: 'renewal', cost: renewalCost, npv: renewalNPV, row: renewalRow }
+            ].sort((a, b) => b.npv - a.npv);
+
+            investments.forEach(inv => {
+                if (totalCost + inv.cost <= budget) {
+                    selectedInvestments.push(inv);
+                    totalCost += inv.cost;
+                }
+            });
+
+            // Calculate ROI now (applied in stage 5)
+            const totalNPV = selectedInvestments.reduce((sum, inv) => sum + inv.npv, 0);
+            const avgROI = totalCost > 0 ? ((totalNPV - totalCost) / totalCost * 100) : 0;
+
+            // Reset step visuals
+            resetSteps();
+
+            // Stage 1: Market analysis
+            sequenceTimers.push(setTimeout(() => {
+                energyStatus.textContent = energyLevel;
+                setStepState(stepEl1, 'active');
+            }, 0));
+
+            // Stage 2: Proposals (update NPV cells)
+            sequenceTimers.push(setTimeout(() => {
+                if (efficiencyRow) efficiencyRow.querySelector('.dp-npv').textContent = efficiencyNPV.toFixed(1);
+                if (capacityRow) capacityRow.querySelector('.dp-npv').textContent = capacityNPV.toFixed(1);
+                proposalsCount.textContent = '3';
+                setStepState(stepEl1, 'done');
+                setStepState(stepEl2, 'active');
+            }, 200));
+
+            // Stage 3: Budget allocation (set selected/rejected tags)
+            sequenceTimers.push(setTimeout(() => {
+                [efficiencyRow, capacityRow, renewalRow].forEach(r => {
+                    if (!r) return;
+                    const tag = r.querySelector('.dp-status span');
+                    if (tag) { tag.textContent = 'Rejected'; tag.style.background = '#ef4444'; }
+                });
+                selectedInvestments.forEach(inv => {
+                    const tag = inv.row.querySelector('.dp-status span');
+                    if (tag) { tag.textContent = 'Selected'; tag.style.background = '#10b981'; }
+                });
+                selectedCount.textContent = selectedInvestments.length.toString();
+                setStepState(stepEl2, 'done');
+                setStepState(stepEl3, 'active');
+            }, 400));
+
+            // Stage 4: Implementation (investment totals)
+            sequenceTimers.push(setTimeout(() => {
+                investmentTotal.textContent = `€${totalCost}M`;
+                setStepState(stepEl3, 'done');
+                setStepState(stepEl4, 'active');
+            }, 600));
+
+            // Stage 5: Performance tracking (ROI & summary)
+            sequenceTimers.push(setTimeout(() => {
+                roi.textContent = `${avgROI.toFixed(1)}%`;
+                totalInvestment.textContent = `€${totalCost}M`;
+                budgetUsed.textContent = `${Math.round((totalCost / budget) * 100)}%`;
+                expectedROI.textContent = `${avgROI.toFixed(1)}%`;
+                setStepState(stepEl4, 'done');
+                setStepState(stepEl5, 'active');
+            }, 800));
+        }
+
+        // Add event listeners
+        [energyPriceSlider, interestRateSlider, budgetSlider].forEach(slider => {
+            slider.addEventListener('input', updateDecisionProcess);
+        });
+
+        // React to manual cost edits
+        const costInputs = container.querySelectorAll('.dp-cost-input');
+        costInputs.forEach(inp => {
+            ['input','change'].forEach(evt => inp.addEventListener(evt, updateDecisionProcess));
+        });
+
+        // Initial update
+        updateDecisionProcess();
+    }
+
+    // Initialize decision process widget if present
+    initDecisionProcessWidget();
 })();

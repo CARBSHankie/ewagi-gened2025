@@ -6,54 +6,184 @@
         </div>
         <div class="detail-section">
             <h3>System Architecture</h3>
-            <p>The EWaGI Decision System is a sophisticated framework that enables firms to make strategic investment and operational decisions through a policy-driven, multi-stage evaluation process.</p>
+            <p>The EWaGI Decision System enables firms to make strategic investment decisions through a policy-driven framework that mimics real-world corporate decision-making processes.</p>
             <ul class="detail-list">
-                <li><strong>DecisionEngine:</strong> Central orchestrator coordinating the entire decision-making process</li>
-                <li><strong>DecisionPolicy:</strong> Strategy implementations that generate investment proposals</li>
-                <li><strong>CapitalAllocator:</strong> Budget allocation logic selecting proposals within constraints</li>
-                <li><strong>DecisionExecutor:</strong> Execution engine applying approved decisions</li>
-                <li><strong>DecisionContext:</strong> Contextual information passed between components</li>
+                <li><strong>Decision Engine:</strong> Central coordinator that manages the entire decision-making workflow</li>
+                <li><strong>Decision Policies:</strong> Business strategies that identify investment opportunities</li>
+                <li><strong>Capital Allocator:</strong> Budget management that selects the best proposals within financial constraints</li>
+                <li><strong>Decision Executor:</strong> Implementation engine that applies approved investments</li>
+                <li><strong>Decision Context:</strong> Real-time economic data that informs all decisions</li>
             </ul>
         </div>
         <div class="detail-section">
-            <h3>Policy-Driven Decision Making</h3>
-            <p>The system operates on the principle of policy-driven decision making, where different business strategies are encapsulated as independent DecisionPolicy implementations.</p>
+            <h3>Investment Decision Types</h3>
+            <p>Firms evaluate different types of strategic investments based on current market conditions and internal performance metrics.</p>
             <ul class="detail-list">
-                <li><strong>CapacityExpansionPolicy:</strong> Evaluates opportunities for expanding production capacity when utilization exceeds 85%</li>
-                <li><strong>EfficiencyUpgradePolicy:</strong> Identifies opportunities for energy efficiency improvements with step-wise upgrades</li>
-                <li><strong>CapitalRenewalPolicy:</strong> Equipment replacement decisions (framework ready)</li>
-                <li><strong>ProcessRDPolicy:</strong> Process innovation investments (framework ready)</li>
-                <li><strong>ProductRDPolicy:</strong> Product development investments (framework ready)</li>
+                <li><strong>Capacity Expansion:</strong> When production utilization exceeds 85%, firms evaluate expanding their production facilities</li>
+                <li><strong>Energy Efficiency Upgrades:</strong> Step-wise improvements to reduce energy consumption and costs</li>
+                <li><strong>Equipment Renewal:</strong> Replacement of aging machinery and technology (framework ready)</li>
+                <li><strong>Process Innovation:</strong> R&D investments to improve production processes (framework ready)</li>
+                <li><strong>Product Development:</strong> New product development and market expansion (framework ready)</li>
             </ul>
         </div>
         <div class="detail-section">
-            <h3>Decision Flow Process</h3>
-            <p>The decision-making process follows a clean separation of concerns with distinct phases:</p>
+            <h3>Decision-Making Process</h3>
+            <p>Firms follow a systematic 5-step process to evaluate and implement investment decisions:</p>
             <ol style="color:#e2e8f0;margin-left:20px;line-height:1.6;">
-                <li><strong>Policy Evaluation:</strong> Each policy evaluates the current economic context</li>
-                <li><strong>Proposal Generation:</strong> Policies generate relevant investment proposals</li>
-                <li><strong>Capital Allocation:</strong> GreedyAllocator selects proposals by NPV ranking within budget constraints</li>
-                <li><strong>Decision Execution:</strong> Approved decisions are applied to simulation state</li>
-                <li><strong>State Update:</strong> Changes are reflected in firm's financial and operational systems</li>
+                <li><strong>Market Analysis:</strong> Evaluate current economic conditions and market opportunities</li>
+                <li><strong>Investment Proposals:</strong> Generate specific investment opportunities with cost-benefit analysis</li>
+                <li><strong>Budget Allocation:</strong> Rank proposals by profitability and select within available budget</li>
+                <li><strong>Implementation:</strong> Execute approved investments and update production systems</li>
+                <li><strong>Performance Tracking:</strong> Monitor results and update financial and operational metrics</li>
             </ol>
+            
+            <!-- Interactive Decision Process Widget -->
+            <div class="decision-process-widget" style="margin-top:12px;background:linear-gradient(135deg,#f8fafc 0%,#eef2f7 100%);border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+                <div class="widget-title" style="margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #e5e7eb;">
+                    <h3 style="margin:0;font-size:18px;font-weight:700;color:#1f2937;font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;letter-spacing:-0.025em;">🧠 EWaGI Decision Process Simulation</h3>
+                </div>
+                
+                <!-- Market Conditions Input -->
+                <div class="dp-input-section" style="margin-bottom:16px;">
+                    <h4 style="margin:0 0 8px 0;font-size:14px;font-weight:600;color:#374151;">Market Conditions</h4>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+                        <div class="dp-field" style="background:white;border-radius:8px;padding:10px;border:1px solid #e5e7eb;">
+                            <label style="font-size:12px;color:#475569;display:block;margin-bottom:4px;">Energy Price (€/MWh)</label>
+                            <div style="display:flex;gap:8px;align-items:center;">
+                                <input class="dp-energy-price" type="range" min="50" max="200" value="120" step="5" style="accent-color:#3b82f6;flex:1;">
+                                <span class="dp-energy-price-val" style="font-size:12px;color:#0f172a;font-weight:600;min-width:35px;">120</span>
+                            </div>
+                        </div>
+                        <div class="dp-field" style="background:white;border-radius:8px;padding:10px;border:1px solid #e5e7eb;">
+                            <label style="font-size:12px;color:#475569;display:block;margin-bottom:4px;">Interest Rate (%)</label>
+                            <div style="display:flex;gap:8px;align-items:center;">
+                                <input class="dp-interest-rate" type="range" min="1" max="8" value="4" step="0.5" style="accent-color:#10b981;flex:1;">
+                                <span class="dp-interest-rate-val" style="font-size:12px;color:#0f172a;font-weight:600;min-width:35px;">4.0</span>
+                            </div>
+                        </div>
+                        <div class="dp-field" style="background:white;border-radius:8px;padding:10px;border:1px solid #e5e7eb;">
+                            <label style="font-size:12px;color:#475569;display:block;margin-bottom:4px;">Available Budget (€M)</label>
+                            <div style="display:flex;gap:8px;align-items:center;">
+                                <input class="dp-budget" type="range" min="5" max="50" value="20" step="1" style="accent-color:#f59e0b;flex:1;">
+                                <span class="dp-budget-val" style="font-size:12px;color:#0f172a;font-weight:600;min-width:35px;">20</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Decision Process Flow -->
+                <div class="dp-process-flow" style="margin-bottom:16px;">
+                    <h4 style="margin:0 0 8px 0;font-size:14px;font-weight:600;color:#374151;">Decision Process Flow</h4>
+                    <div class="dp-steps" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;">
+                        <div class="dp-step dp-step-1" style="flex:1;min-width:120px;background:white;border-radius:8px;padding:8px;border:2px solid #3b82f6;text-align:center;">
+                            <div style="font-size:11px;color:#3b82f6;font-weight:600;">STEP 1</div>
+                            <div style="font-size:12px;color:#1f2937;font-weight:600;">Market Analysis</div>
+                            <div class="dp-step-result" style="font-size:10px;color:#6b7280;margin-top:2px;">Energy: <span class="dp-energy-status">High</span></div>
+                        </div>
+                        <div class="dp-arrow" style="display:flex;align-items:center;color:#9ca3af;font-size:12px;">→</div>
+                        <div class="dp-step dp-step-2" style="flex:1;min-width:120px;background:white;border-radius:8px;padding:8px;border:2px solid #e5e7eb;text-align:center;">
+                            <div style="font-size:11px;color:#6b7280;font-weight:600;">STEP 2</div>
+                            <div style="font-size:12px;color:#1f2937;font-weight:600;">Investment Proposals</div>
+                            <div class="dp-step-result" style="font-size:10px;color:#6b7280;margin-top:2px;">Proposals: <span class="dp-proposals-count">3</span></div>
+                        </div>
+                        <div class="dp-arrow" style="display:flex;align-items:center;color:#9ca3af;font-size:12px;">→</div>
+                        <div class="dp-step dp-step-3" style="flex:1;min-width:120px;background:white;border-radius:8px;padding:8px;border:2px solid #e5e7eb;text-align:center;">
+                            <div style="font-size:11px;color:#6b7280;font-weight:600;">STEP 3</div>
+                            <div style="font-size:12px;color:#1f2937;font-weight:600;">Budget Allocation</div>
+                            <div class="dp-step-result" style="font-size:10px;color:#6b7280;margin-top:2px;">Selected: <span class="dp-selected-count">2</span></div>
+                        </div>
+                        <div class="dp-arrow" style="display:flex;align-items:center;color:#9ca3af;font-size:12px;">→</div>
+                        <div class="dp-step dp-step-4" style="flex:1;min-width:120px;background:white;border-radius:8px;padding:8px;border:2px solid #e5e7eb;text-align:center;">
+                            <div style="font-size:11px;color:#6b7280;font-weight:600;">STEP 4</div>
+                            <div style="font-size:12px;color:#1f2937;font-weight:600;">Implementation</div>
+                            <div class="dp-step-result" style="font-size:10px;color:#6b7280;margin-top:2px;">Investment: <span class="dp-investment-total">€15M</span></div>
+                        </div>
+                        <div class="dp-arrow" style="display:flex;align-items:center;color:#9ca3af;font-size:12px;">→</div>
+                        <div class="dp-step dp-step-5" style="flex:1;min-width:120px;background:white;border-radius:8px;padding:8px;border:2px solid #e5e7eb;text-align:center;">
+                            <div style="font-size:11px;color:#6b7280;font-weight:600;">STEP 5</div>
+                            <div style="font-size:12px;color:#1f2937;font-weight:600;">Performance Tracking</div>
+                            <div class="dp-step-result" style="font-size:10px;color:#6b7280;margin-top:2px;">ROI: <span class="dp-roi">12.5%</span></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Investment Proposals Table -->
+                <div class="dp-proposals-section" style="margin-bottom:16px;">
+                    <h4 style="margin:0 0 8px 0;font-size:14px;font-weight:600;color:#374151;">Investment Proposals Analysis</h4>
+                    <div style="background:white;border-radius:8px;border:1px solid #e5e7eb;overflow:hidden;">
+                        <table style="width:100%;border-collapse:collapse;">
+                            <thead style="background:#f8fafc;">
+                                <tr>
+                                    <th style="padding:8px;text-align:left;font-size:11px;color:#475569;font-weight:600;">Investment Type</th>
+                                    <th style="padding:8px;text-align:right;font-size:11px;color:#475569;font-weight:600;">Cost (€M)</th>
+                                    <th style="padding:8px;text-align:right;font-size:11px;color:#475569;font-weight:600;">NPV (€M)</th>
+                                    <th style="padding:8px;text-align:center;font-size:11px;color:#475569;font-weight:600;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="dp-proposal-row" data-type="efficiency">
+                                    <td style="padding:8px;font-size:12px;color:#1f2937;">Energy Efficiency</td>
+                                    <td class="dp-cost" style="padding:8px;text-align:right;font-size:12px;color:#1f2937;"><input class="dp-cost-input" data-type="efficiency" type="number" min="0" step="0.5" value="8" style="width:64px;padding:2px 4px;border:1px solid #e5e7eb;border-radius:4px;color:#1f2937;background:#fff;"></td>
+                                    <td class="dp-npv" style="padding:8px;text-align:right;font-size:12px;color:#1f2937;">12.5</td>
+                                    <td class="dp-status" style="padding:8px;text-align:center;"><span style="background:#10b981;color:#fff;border-radius:999px;padding:2px 6px;font-size:10px;">Selected</span></td>
+                                </tr>
+                                <tr class="dp-proposal-row" data-type="capacity">
+                                    <td style="padding:8px;font-size:12px;color:#1f2937;">Capacity Expansion</td>
+                                    <td class="dp-cost" style="padding:8px;text-align:right;font-size:12px;color:#1f2937;"><input class="dp-cost-input" data-type="capacity" type="number" min="0" step="0.5" value="15" style="width:64px;padding:2px 4px;border:1px solid #e5e7eb;border-radius:4px;color:#1f2937;background:#fff;"></td>
+                                    <td class="dp-npv" style="padding:8px;text-align:right;font-size:12px;color:#1f2937;">18.2</td>
+                                    <td class="dp-status" style="padding:8px;text-align:center;"><span style="background:#10b981;color:#fff;border-radius:999px;padding:2px 6px;font-size:10px;">Selected</span></td>
+                                </tr>
+                                <tr class="dp-proposal-row" data-type="renewal">
+                                    <td style="padding:8px;font-size:12px;color:#1f2937;">Equipment Renewal</td>
+                                    <td class="dp-cost" style="padding:8px;text-align:right;font-size:12px;color:#1f2937;"><input class="dp-cost-input" data-type="renewal" type="number" min="0" step="0.5" value="12" style="width:64px;padding:2px 4px;border:1px solid #e5e7eb;border-radius:4px;color:#1f2937;background:#fff;"></td>
+                                    <td class="dp-npv" style="padding:8px;text-align:right;font-size:12px;color:#1f2937;">8.7</td>
+                                    <td class="dp-status" style="padding:8px;text-align:center;"><span style="background:#ef4444;color:#fff;border-radius:999px;padding:2px 6px;font-size:10px;">Rejected</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Summary Metrics -->
+                <div class="dp-summary" style="background:#ffffff;border:1px solid #e5e7eb;border-radius:8px;padding:10px;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+                    <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+                        <div style="font-size:13px;color:#000000;">Total Investment: <strong class="dp-total-investment" style="font-weight:700;color:#000000;">€23M</strong></div>
+                        <div style="font-size:13px;color:#000000;">Budget Used: <strong class="dp-budget-used" style="font-weight:700;color:#000000;">115%</strong></div>
+                        <div style="font-size:13px;color:#000000;">Expected ROI: <strong class="dp-expected-roi" style="font-weight:700;color:#000000;">15.8%</strong></div>
+                        <div style="font-size:13px;color:#000000;">Formula: <span style="font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;background:#f8fafc;border:1px solid #e5e7eb;border-radius:4px;padding:2px 6px;color:#000000;">NPV = Σ(CFt / (1+r)^t)</span></div>
+                    </div>
+                </div>
+                
+                <div class="dp-hint" style="font-size:12px;color:#475569;margin-top:6px;">Adjust market conditions to see how firms adapt their investment decisions. Higher energy prices increase efficiency investment attractiveness.</div>
+            </div>
         </div>
         <div class="detail-section">
-            <h3>Economic Integration</h3>
-            <p>The system maintains economic consistency through proper scaling conventions and financial integration:</p>
+            <h3>Economic Validation</h3>
+            <p>The decision system ensures realistic economic behavior through rigorous financial analysis:</p>
             <ul class="detail-list">
-                <li><strong>Scaling Awareness:</strong> Handles both SIM and REAL scale calculations using SIMULATION_SCALE_RATIO</li>
-                <li><strong>NPV Calculations:</strong> 36-period discounted cash flow analysis for capacity expansion, 24-period for efficiency upgrades</li>
-                <li><strong>Financial Integration:</strong> Properly books investments in firm accounts using FinanceUtils</li>
-                <li><strong>Market Integration:</strong> Uses current market prices for cost calculations and WACC for discounting</li>
+                <li><strong>Scale Conversion:</strong> Seamlessly converts between simulation and real-world economic scales</li>
+                <li><strong>NPV Analysis:</strong> 36-month cash flow projections for capacity expansion, 24-month for efficiency upgrades</li>
+                <li><strong>Financial Accounting:</strong> All investments are properly recorded in firm financial statements</li>
+                <li><strong>Market Pricing:</strong> Uses real-time market prices and weighted average cost of capital for discounting</li>
             </ul>
         </div>
         <div class="detail-section">
-            <h3>Key Features</h3>
+            <h3>System Advantages</h3>
             <ul class="detail-list">
-                <li><strong>Modular Design:</strong> Easy to add/remove policies without affecting others</li>
-                <li><strong>Extensible Framework:</strong> Clean interfaces for custom policy implementation</li>
-                <li><strong>Performance Optimized:</strong> Stream processing and early termination for efficiency</li>
-                <li><strong>Economic Validation:</strong> Comprehensive testing strategy including unit, integration, and scenario tests</li>
+                <li><strong>Modular Architecture:</strong> Easy to add new investment strategies without disrupting existing ones</li>
+                <li><strong>Extensible Framework:</strong> Clean interfaces allow for custom policy development and testing</li>
+                <li><strong>High Performance:</strong> Optimized processing ensures fast decision-making even with thousands of firms</li>
+                <li><strong>Rigorous Testing:</strong> Comprehensive validation through unit tests, integration tests, and scenario analysis</li>
+            </ul>
+        </div>
+        
+        <div class="detail-section">
+            <h3>What to Watch</h3>
+            <ul class="detail-list">
+                <li>Investment patterns across different economic cycles</li>
+                <li>Energy efficiency adoption rates and cost impacts</li>
+                <li>Capacity expansion timing and market responsiveness</li>
+                <li>Firm-level heterogeneity in investment strategies</li>
             </ul>
         </div>
     </div>
