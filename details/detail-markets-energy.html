@@ -5,33 +5,117 @@
             <button class="detail-close" onclick="hideDetail()">Close</button>
         </div>
         <div class="detail-section">
-            <h3>Energy Trading</h3>
-            <p>Energy price scenarios and procurement contracts</p>
+            <h3>Market Structure</h3>
+            <p>Dual supply model: dedicated energy firms and energy plants within manufacturing firms compete in one market.</p>
             <ul class="detail-list">
-                <li>Energy price scenarios and procurement contracts</li>
-                <li>Fuel switching and on-site generation integration</li>
-                <li>Policy shocks for transition analysis</li>
-                <li>Renewable energy feed-in tariffs</li>
+                <li><strong>Dedicated Energy Firms</strong>: Electricity, gas, water/waste utilities; specialized operations; stable presence.</li>
+                <li><strong>Manufacturing Energy Plants</strong>: On-site generation; flexible entry/exit; fast response to prices.</li>
             </ul>
         </div>
         <div class="detail-section">
-            <h3>Energy Policy</h3>
-            <p>Carbon pricing, renewables, and efficiency measures</p>
+            <h3>Pricing & Trading Flow</h3>
             <ul class="detail-list">
-                <li>Carbon pricing and emissions trading</li>
-                <li>Renewable energy support mechanisms</li>
-                <li>Energy efficiency standards and regulations</li>
-                <li>Industrial competitiveness support measures</li>
+                <li>1) Demand set by plant output and efficiency</li>
+                <li>2) Suppliers selected via mall system (all energy suppliers)</li>
+                <li>3) Orders placed; deliveries fulfilled</li>
+                <li>4) Price = quantity-weighted average across transactions</li>
+                <li>5) Costs integrated into production finance</li>
+                <li>6) Signals feed back into investment and efficiency</li>
+            </ul>
+            
+            <!-- Interactive Pricing Widget -->
+            <div class="energy-pricing-widget" style="margin-top:12px;background:linear-gradient(135deg,#f8fafc 0%,#eef2f7 100%);border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+                <div class="widget-title" style="margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #e5e7eb;">
+                    <h3 style="margin:0;font-size:18px;font-weight:700;color:#1f2937;font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;letter-spacing:-0.025em;">⚡ EWaGI Energy Market Dynamics</h3>
+                </div>
+                <div class="ep-row" style="display:flex;gap:12px;flex-wrap:wrap;">
+                    <div class="ep-card" style="flex:1;min-width:240px;background:white;border-radius:10px;padding:12px;border:1px solid #e5e7eb;">
+                        <div class="ep-title" style="font-weight:700;color:#1f2937;margin-bottom:8px;">Dedicated Energy Firms</div>
+                        <div class="ep-field" style="display:grid;grid-template-columns:110px 1fr;gap:8px;align-items:center;margin:6px 0;">
+                            <label style="font-size:12px;color:#475569;">Share (%)</label>
+                            <div style="display:flex;gap:8px;align-items:center;">
+                                <input class="ep-s1" type="range" min="0" max="100" value="60" step="1" style="accent-color:#22c55e;flex:1;">
+                                <span class="ep-s1-val" style="font-size:12px;color:#0f172a;font-weight:600;min-width:30px;">60</span>
+                            </div>
+                        </div>
+                        <div class="ep-field" style="display:grid;grid-template-columns:110px 1fr;gap:8px;align-items:center;margin:6px 0;">
+                            <label style="font-size:12px;color:#475569;">Unit Price (P1)</label>
+                            <div style="display:flex;gap:8px;align-items:center;">
+                                <input class="ep-p1" type="range" min="20" max="240" value="140" step="1" style="accent-color:#22c55e;flex:1;">
+                                <span class="ep-p1-val" style="font-size:12px;color:#0f172a;font-weight:600;min-width:30px;">140</span>
+                            </div>
+                        </div>
+                        <div class="ep-kpi" style="font-size:12px;color:#0f172a;margin-top:8px;">Value: <strong class="ep-v1" style="color:#0f172a;">16800</strong></div>
+                    </div>
+                    <div class="ep-card" style="flex:1;min-width:240px;background:white;border-radius:10px;padding:12px;border:1px solid #e5e7eb;">
+                        <div class="ep-title" style="font-weight:700;color:#1f2937;margin-bottom:8px;">Manufacturing Energy Plants</div>
+                        <div class="ep-field" style="display:grid;grid-template-columns:110px 1fr;gap:8px;align-items:center;margin:6px 0;">
+                            <label style="font-size:12px;color:#475569;">Share (%)</label>
+                            <div style="display:flex;gap:8px;align-items:center;">
+                                <input class="ep-s2" type="range" min="0" max="100" value="40" step="1" style="accent-color:#f59e0b;flex:1;">
+                                <span class="ep-s2-val" style="font-size:12px;color:#0f172a;font-weight:600;min-width:30px;">40</span>
+                            </div>
+                        </div>
+                        <div class="ep-field" style="display:grid;grid-template-columns:110px 1fr;gap:8px;align-items:center;margin:6px 0;">
+                            <label style="font-size:12px;color:#475569;">Unit Price (P2)</label>
+                            <div style="display:flex;gap:8px;align-items:center;">
+                                <input class="ep-p2" type="range" min="20" max="240" value="110" step="1" style="accent-color:#f59e0b;flex:1;">
+                                <span class="ep-p2-val" style="font-size:12px;color:#0f172a;font-weight:600;min-width:30px;">110</span>
+                            </div>
+                        </div>
+                        <div class="ep-kpi" style="font-size:12px;color:#0f172a;margin-top:8px;">Value: <strong class="ep-v2" style="color:#0f172a;">8800</strong></div>
+                    </div>
+                </div>
+                <div class="ep-row" style="margin-top:12px;display:flex;flex-direction:column;gap:8px;">
+                    <div class="ep-mode" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                        <span style="font-size:12px;color:#475569;">Split by:</span>
+                        <button class="ep-mode-btn active" data-mode="qty" style="border:1px solid #3b82f6;background:#dbeafe;color:#1e40af;font-size:12px;padding:4px 8px;border-radius:6px;cursor:pointer;">Quantity</button>
+                        <button class="ep-mode-btn" data-mode="val" style="border:1px solid #cbd5e1;background:#fff;color:#0f172a;font-size:12px;padding:4px 8px;border-radius:6px;cursor:pointer;">Value</button>
+                        <span style="margin-left:12px;font-size:12px;color:#475569;">Total Quantity</span>
+                        <div style="display:flex;gap:8px;align-items:center;">
+                            <input class="ep-qt" type="range" min="50" max="400" value="200" step="1" style="width:180px;accent-color:#64748b;">
+                            <span class="ep-qt-val" style="font-size:12px;color:#0f172a;font-weight:600;min-width:30px;">200</span>
+                        </div>
+                    </div>
+                    <div class="ep-composition" style="margin-top:8px;">
+                        <div style="display:flex;gap:8px;align-items:center;margin-bottom:4px;">
+                            <span style="font-size:12px;color:#475569;">Composition:</span>
+                            <span class="ep-comp-label" style="font-size:12px;color:#000000;font-weight:600;">Quantity Split</span>
+                        </div>
+                        <div class="ep-bar" style="display:flex;height:14px;background:#e5e7eb;border-radius:999px;overflow:hidden;">
+                            <div class="ep-bar1" style="height:100%;width:60%;background:linear-gradient(90deg,#22c55e,#16a34a);"></div>
+                            <div class="ep-bar2" style="height:100%;width:40%;background:linear-gradient(90deg,#f59e0b,#d97706);"></div>
+                        </div>
+                    </div>
+                    <div class="ep-revenue-tags" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
+                        <span style="font-size:12px;color:#475569;">Revenue share:</span>
+                        <span class="ep-rev1" style="background:linear-gradient(90deg,#22c55e,#16a34a);color:#fff;border-radius:999px;padding:2px 8px;font-size:12px;">—%</span>
+                        <span class="ep-rev2" style="background:linear-gradient(90deg,#f59e0b,#d97706);color:#fff;border-radius:999px;padding:2px 8px;font-size:12px;">—%</span>
+                    </div>
+                    <div class="ep-metrics" style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;background:#ffffff;border:1px solid #e5e7eb;border-radius:8px;padding:8px 10px;color:#000000;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+                        <div style="font-size:13px;color:#000000;">Weighted Price: <strong class="ep-weighted" style="font-weight:700;color:#000000;">128.00</strong></div>
+                        <div style="font-size:13px;color:#000000;">Total Quantity: <strong class="ep-qty" style="font-weight:700;color:#000000;">200</strong></div>
+                        <div style="font-size:13px;color:#000000;">Formula: <span style="font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;background:#f8fafc;border:1px solid #e5e7eb;border-radius:4px;padding:2px 6px;color:#000000;">P = (Q1·P1 + Q2·P2) / (Q1 + Q2)</span></div>
+                    </div>
+                </div>
+                <div class="ep-hint" style="font-size:12px;color:#475569;margin-top:6px;">Adjust Share (%) and Total Quantity to enforce Q1 + Q2 = 100% of total. Toggle the split mode to see Quantity vs Value composition.</div>
+            </div>
+        </div>
+        <div class="detail-section">
+            <h3>Investment & Efficiency</h3>
+            <ul class="detail-list">
+                <li><strong>Capacity investment</strong>: NPV-based decisions on energy production.</li>
+                <li><strong>Efficiency upgrades</strong>: Elasticity-driven; higher prices → more investment.</li>
+                <li><strong>Emissions</strong>: Basic CO₂ modeling; efficiency reduces intensity.</li>
             </ul>
         </div>
         <div class="detail-section">
-            <h3>Technology Integration</h3>
-            <p>Energy technology adoption and innovation</p>
+            <h3>What to Watch</h3>
             <ul class="detail-list">
-                <li>Energy efficiency: 2-5% annual improvement potential</li>
-                <li>Fuel switching: Natural gas to electricity substitution</li>
-                <li>Self-generation: On-site renewable energy systems</li>
-                <li>Process optimization: Lean manufacturing principles</li>
+                <li>Energy price trajectory and volatility</li>
+                <li>Supply vs. demand balance across cycles</li>
+                <li>Efficiency gains and cost impacts</li>
+                <li>Government energy sector statistics</li>
             </ul>
         </div>
     </div>

@@ -300,8 +300,10 @@ function showDetail(detailId) {
         document.body.style.overflow = 'hidden';
         // Initialize dynamic content for specific details
         if (detailId === 'macroeconomic-indicators') {
-            // Small delay to ensure modal is visible and canvas has dimensions
             setTimeout(initMacroChart, 50);
+        }
+        if (detailId === 'markets-energy') {
+            setTimeout(() => initEnergyPricingWidget(detailPage), 30);
         }
     } else {
         // Try to lazy-load external detail file
@@ -345,6 +347,7 @@ function showDetail(detailId) {
 
                 // Initialize dynamic content as needed
                 if (detailId === 'macroeconomic-indicators') setTimeout(initMacroChart, 50);
+                if (detailId === 'markets-energy') setTimeout(() => initEnergyPricingWidget(bodyEl || document), 30);
                 
             })
             .catch(() => {
@@ -509,6 +512,116 @@ function initMacroChart() {
                 console.warn('Fallback JSON also failed');
             }
         });
+}
+
+// ===== Energy Pricing Widget (detail-markets-energy) =====
+function initEnergyPricingWidget(root) {
+    try {
+        const container = root || document;
+        const s1 = container.querySelector('.ep-s1');
+        const s2 = container.querySelector('.ep-s2');
+        const p1 = container.querySelector('.ep-p1');
+        const p2 = container.querySelector('.ep-p2');
+        const qt = container.querySelector('.ep-qt');
+        const v1El = container.querySelector('.ep-v1');
+        const v2El = container.querySelector('.ep-v2');
+        const bar1 = container.querySelector('.ep-bar1');
+        const bar2 = container.querySelector('.ep-bar2');
+        const weightedEl = container.querySelector('.ep-weighted');
+        const qtyEl = container.querySelector('.ep-qty');
+        if (!s1 || !s2 || !p1 || !p2 || !qt || !v1El || !v2El || !bar1 || !bar2 || !weightedEl || !qtyEl) return;
+
+        function clamp(n) { return isFinite(n) ? n : 0; }
+
+        function syncShares(source) {
+            const a = clamp(Number(s1.value));
+            const b = clamp(Number(s2.value));
+            if (source === 's1') {
+                s2.value = String(Math.max(0, Math.min(100, 100 - a)));
+            } else if (source === 's2') {
+                s1.value = String(Math.max(0, Math.min(100, 100 - b)));
+            } else {
+                s2.value = String(Math.max(0, Math.min(100, 100 - a)));
+            }
+        }
+
+        function update() {
+            const share1 = clamp(Number(s1.value));        // 0..100
+            const share2 = 100 - share1;
+            const totalQ = clamp(Number(qt.value));        // total quantity
+            const Q1 = Math.max(0, Math.round((share1 / 100) * totalQ));
+            const Q2 = Math.max(0, totalQ - Q1);
+            const P1 = clamp(Number(p1.value));
+            const P2 = clamp(Number(p2.value));
+            const V1 = Q1 * P1;
+            const V2 = Q2 * P2;
+            const QT = Q1 + Q2; // equals totalQ
+            const WT = QT > 0 ? (V1 + V2) / QT : 0;
+
+            // Update slider value displays
+            const s1Val = container.querySelector('.ep-s1-val');
+            const s2Val = container.querySelector('.ep-s2-val');
+            const p1Val = container.querySelector('.ep-p1-val');
+            const p2Val = container.querySelector('.ep-p2-val');
+            const qtVal = container.querySelector('.ep-qt-val');
+            if (s1Val) s1Val.textContent = share1.toString();
+            if (s2Val) s2Val.textContent = share2.toString();
+            if (p1Val) p1Val.textContent = P1.toString();
+            if (p2Val) p2Val.textContent = P2.toString();
+            if (qtVal) qtVal.textContent = totalQ.toString();
+
+            v1El.textContent = Math.round(V1).toString();
+            v2El.textContent = Math.round(V2).toString();
+            weightedEl.textContent = (Math.round(WT * 100) / 100).toFixed(2);
+            qtyEl.textContent = Math.round(QT).toString();
+
+            const modeBtn = container.querySelector('.ep-mode-btn.active');
+            const mode = modeBtn ? modeBtn.getAttribute('data-mode') : 'qty';
+            const base = mode === 'val' ? (V1 + V2) : QT;
+            const sBar1 = base > 0 ? ((mode === 'val' ? V1 : Q1) / base) * 100 : 0;
+            const sBar2 = 100 - sBar1;
+            bar1.style.width = `${sBar1}%`;
+            bar2.style.width = `${sBar2}%`;
+
+            // Update composition label
+            const compLabel = container.querySelector('.ep-comp-label');
+            if (compLabel) {
+                compLabel.textContent = mode === 'val' ? 'Value Split' : 'Quantity Split';
+            }
+
+            // Revenue share tags always reflect value shares
+            const rev1 = container.querySelector('.ep-rev1');
+            const rev2 = container.querySelector('.ep-rev2');
+            const VT = V1 + V2;
+            const r1 = VT > 0 ? (V1 / VT) * 100 : 0;
+            const r2 = 100 - r1;
+            if (rev1) rev1.textContent = `${(Math.round(r1 * 10) / 10).toFixed(1)}%`;
+            if (rev2) rev2.textContent = `${(Math.round(r2 * 10) / 10).toFixed(1)}%`;
+        }
+        ['input','change'].forEach(evt => {
+            s1.addEventListener(evt, () => { syncShares('s1'); update(); });
+            s2.addEventListener(evt, () => { syncShares('s2'); update(); });
+            p1.addEventListener(evt, update);
+            p2.addEventListener(evt, update);
+            qt.addEventListener(evt, update);
+        });
+        const modeButtons = container.querySelectorAll('.ep-mode-btn');
+        modeButtons.forEach(btn => btn.addEventListener('click', () => {
+            modeButtons.forEach(b => {
+                b.classList.remove('active');
+                b.style.border = '1px solid #cbd5e1';
+                b.style.background = '#fff';
+                b.style.color = '#0f172a';
+            });
+            btn.classList.add('active');
+            btn.style.border = '1px solid #3b82f6';
+            btn.style.background = '#dbeafe';
+            btn.style.color = '#1e40af';
+            update();
+        }));
+        syncShares('init');
+        update();
+    } catch (_) {}
 }
 
 // DETAIL_MAP removed - all detail files now exist in details/ folder
