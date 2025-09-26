@@ -299,13 +299,13 @@ function showDetail(detailId) {
         }
         document.body.style.overflow = 'hidden';
         // Initialize dynamic content for specific details
-        if (detailId === 'macroeconomic-indicators') {
+        if (detailId === 'result-macroeconomic-indicators') {
             setTimeout(initMacroChart, 50);
         }
-        if (detailId === 'markets-energy') {
+        if (detailId === 'econ-markets-energy') {
             setTimeout(() => initEnergyPricingWidget(detailPage), 30);
         }
-        if (detailId === 'core-decision-system') {
+        if (detailId === 'econ-core-system-decision') {
             setTimeout(() => {
                 if (window.initDecisionProcessWidget) {
                     window.initDecisionProcessWidget();
@@ -353,9 +353,9 @@ function showDetail(detailId) {
                 if (bodyEl) bodyEl.innerHTML = fetchedRoot.innerHTML;
 
                 // Initialize dynamic content as needed
-                if (detailId === 'macroeconomic-indicators') setTimeout(initMacroChart, 50);
-                if (detailId === 'markets-energy') setTimeout(() => initEnergyPricingWidget(bodyEl || document), 30);
-                if (detailId === 'core-decision-system') setTimeout(() => {
+                if (detailId === 'result-macroeconomic-indicators') setTimeout(initMacroChart, 50);
+                if (detailId === 'econ-markets-energy') setTimeout(() => initEnergyPricingWidget(bodyEl || document), 30);
+                if (detailId === 'econ-core-system-decision') setTimeout(() => {
                     if (window.initDecisionProcessWidget) {
                         window.initDecisionProcessWidget();
                     }
