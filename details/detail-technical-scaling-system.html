@@ -5,33 +5,33 @@
             <button class="detail-close" onclick="hideDetail()">Close</button>
         </div>
         <div class="detail-section">
-            <h3>SIM/REAL Scale Conversion</h3>
-            <p>Automatic upscaling with consistent economic relationships</p>
+            <h3>Hybrid Scaling Approach</h3>
+            <p>Balanced computational efficiency with economic realism</p>
             <ul class="detail-list">
-                <li>SIM/REAL scale conversion with automatic upscaling</li>
-                <li>Consistent economic relationships across scale levels</li>
-                <li>Flexible granularity modes with easily adaptable empirical data inputs</li>
-                <li>Scaling awareness in all economic calculations</li>
+                <li><strong>Agent counts scaled</strong>: Firms and households divided by SIMULATION_SCALE_RATIO (1:1000)</li>
+                <li><strong>Economic indicators real</strong>: GDP, population, unemployment rates at real-world values</li>
+                <li><strong>Prices & wages real</strong>: All monetary values maintained at real scale</li>
+                <li><strong>Coefficients real</strong>: Technical coefficients and ratios at empirical scale</li>
             </ul>
         </div>
         <div class="detail-section">
-            <h3>Configurable Granularity</h3>
-            <p>Flexible simulation architecture for different analysis needs</p>
+            <h3>Scale Conversion Process</h3>
+            <p>Automatic upscaling for meaningful economic analysis</p>
             <ul class="detail-list">
-                <li>Configurable granularity with empirical calibration</li>
-                <li>Flexible simulation architecture supporting different granularity modes</li>
-                <li>Easily adaptable empirical data inputs</li>
-                <li>Scalable from micro to macro analysis levels</li>
+                <li><strong>Single source of truth</strong>: SIMULATION_SCALE_RATIO from DatabaseConfig.properties</li>
+                <li><strong>Scale-at-point-of-use</strong>: Data stored at simulation scale, upscaled when needed</li>
+                <li><strong>Clear naming conventions</strong>: Explicit distinction between sim-scale and real-scale values</li>
+                <li><strong>Automatic upscaling</strong>: Micro-level behavior aggregates to macro-level outcomes</li>
             </ul>
         </div>
         <div class="detail-section">
-            <h3>Economic Consistency</h3>
-            <p>Maintaining economic relationships across scale levels</p>
+            <h3>Implementation Example</h3>
+            <p>Practical scaling in economic calculations</p>
             <ul class="detail-list">
-                <li>Economic consistency across all scale levels</li>
-                <li>Proper scaling conventions and financial integration</li>
-                <li>SIMULATION_SCALE_RATIO for consistent calculations</li>
-                <li>Validation of economic relationships at all scales</li>
+                <li><strong>Agent scaling</strong>: 3.5M firms → 3,500 simulation firms (1:1000 ratio)</li>
+                <li><strong>Upscaling calculation</strong>: realLaborStock = laborStock × SIMULATION_SCALE_RATIO</li>
+                <li><strong>Economic consistency</strong>: Total labor cost = realLaborStock × avgWage</li>
+                <li><strong>Validation</strong>: Simulation outputs match real-world economic patterns</li>
             </ul>
         </div>
     </div>

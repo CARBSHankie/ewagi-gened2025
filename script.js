@@ -412,9 +412,26 @@ function parseCSV(text) {
     });
 }
 
-// Presentation-time constants: set these to your copied timestamped filenames
-const MACRO_INDICATORS_CSV = './assets/simulations/macro_indicators_2025-09-05_10-21-05.csv';
-const SAMPLE_FIRMS_PRODUCTION_CSV = './assets/simulations/sample_firms_production_2025-09-05_10-21-05.csv';
+// Resolve a single timestamped CSV via a small hint file that contains just the filename
+function resolveCsvViaHint(prefix) {
+    const base = './assets/simulations/';
+    // support both upper/lower-case prefixes for convenience
+    const hintCandidates = [
+        `${base}latest_${prefix}.txt`,
+        `${base}LATEST_${prefix}.txt`,
+        `${base}${prefix}.txt`,
+        `${base}${prefix.toLowerCase()}.txt`
+    ];
+    const tryNext = (i) => {
+        if (i >= hintCandidates.length) return Promise.reject(new Error('No hint file found'));
+        const url = hintCandidates[i];
+        return fetch(url, { cache: 'no-store', mode: 'cors', credentials: 'same-origin' })
+            .then(r => { if (!r.ok) throw new Error('not ok'); return r.text(); })
+            .then(t => `${base}${t.trim()}`)
+            .catch(() => tryNext(i + 1));
+    };
+    return tryNext(0);
+}
 
 let macroChartInstance = null;
 function initMacroChart() {
@@ -493,8 +510,9 @@ function initMacroChart() {
         };
     }
 
-    // Fetch the explicit timestamped CSV; fallback to embedded JSON payload
-    fetch(MACRO_INDICATORS_CSV, { cache: 'no-store', mode: 'cors', credentials: 'same-origin' })
+    // Fetch the single timestamped CSV named in hint file; fallback to embedded JSON payload
+    resolveCsvViaHint('macro_indicators')
+        .then(csvUrl => fetch(csvUrl, { cache: 'no-store', mode: 'cors', credentials: 'same-origin' }))
         .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`); return r.text(); })
         .then(text => parseCSV(text))
         .then(rows => render(datasetFromCSV(rows)))
@@ -608,8 +626,9 @@ function initFirmDynamicsChart() {
         ]};
     }
 
-    // Fetch the explicit timestamped CSV; fallback to embedded JSON
-    fetch(SAMPLE_FIRMS_PRODUCTION_CSV, { cache: 'no-store', mode: 'cors', credentials: 'same-origin' })
+    // Fetch the single timestamped CSV named in hint file; fallback to embedded JSON
+    resolveCsvViaHint('sample_firms_production')
+        .then(csvUrl => fetch(csvUrl, { cache: 'no-store', mode: 'cors', credentials: 'same-origin' }))
         .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); })
         .then(text => parseCSV(text))
         .then(rows => render(aggregateFirmCSV(rows)))
