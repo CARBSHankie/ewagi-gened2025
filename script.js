@@ -302,6 +302,9 @@ function showDetail(detailId) {
         if (detailId === 'result-macroeconomic-indicators') {
             setTimeout(initMacroChart, 50);
         }
+        if (detailId === 'result-firm-dynamics') {
+            setTimeout(initFirmDynamicsChart, 60);
+        }
         if (detailId === 'econ-markets-energy') {
             setTimeout(() => initEnergyPricingWidget(detailPage), 30);
         }
@@ -354,6 +357,7 @@ function showDetail(detailId) {
 
                 // Initialize dynamic content as needed
                 if (detailId === 'result-macroeconomic-indicators') setTimeout(initMacroChart, 50);
+                if (detailId === 'result-firm-dynamics') setTimeout(initFirmDynamicsChart, 60);
                 if (detailId === 'econ-markets-energy') setTimeout(() => initEnergyPricingWidget(bodyEl || document), 30);
                 if (detailId === 'econ-core-system-decision') setTimeout(() => {
                     if (window.initDecisionProcessWidget) {
@@ -407,6 +411,10 @@ function parseCSV(text) {
         return row;
     });
 }
+
+// Presentation-time constants: set these to your copied timestamped filenames
+const MACRO_INDICATORS_CSV = './assets/simulations/macro_indicators_2025-09-05_10-21-05.csv';
+const SAMPLE_FIRMS_PRODUCTION_CSV = './assets/simulations/sample_firms_production_2025-09-05_10-21-05.csv';
 
 let macroChartInstance = null;
 function initMacroChart() {
@@ -485,16 +493,9 @@ function initMacroChart() {
         };
     }
 
-    // Try CSV; fallback to embedded JSON payload
-    fetch('./assets/simulations/macro_indicators.csv', { 
-        cache: 'no-store',
-        mode: 'cors',
-        credentials: 'same-origin'
-    })
-        .then(r => { 
-            if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`); 
-            return r.text(); 
-        })
+    // Fetch the explicit timestamped CSV; fallback to embedded JSON payload
+    fetch(MACRO_INDICATORS_CSV, { cache: 'no-store', mode: 'cors', credentials: 'same-origin' })
+        .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`); return r.text(); })
         .then(text => parseCSV(text))
         .then(rows => render(datasetFromCSV(rows)))
         .catch((err) => {
@@ -523,6 +524,117 @@ function initMacroChart() {
             } catch(_) { 
                 console.warn('Fallback JSON also failed');
             }
+        });
+}
+
+// ===== Firm Dynamics chart utilities =====
+let firmChartInstance = null;
+function initFirmDynamicsChart() {
+    if (!window.Chart) {
+        setTimeout(initFirmDynamicsChart, 100);
+        return;
+    }
+
+    // Locate canvas within visible modal/detail
+    let canvas = null;
+    const modal = document.getElementById('detail-modal');
+    if (modal && modal.style.display !== 'none') {
+        canvas = modal.querySelector('.firm-chart');
+    }
+    if (!canvas) {
+        const detailPages = document.querySelectorAll('.detail-page');
+        for (const page of detailPages) {
+            if (page.style.display !== 'none' && page.style.visibility !== 'hidden') {
+                canvas = page.querySelector('.firm-chart');
+                if (canvas) break;
+            }
+        }
+    }
+    if (!canvas) {
+        const canvases = document.querySelectorAll('.firm-chart');
+        for (const c of canvases) {
+            if (c.offsetParent !== null && c.clientWidth > 0) { canvas = c; break; }
+        }
+    }
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    function render(data) {
+        if (firmChartInstance) firmChartInstance.destroy();
+        firmChartInstance = new Chart(ctx, {
+            type: 'line',
+            data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { type: 'linear', position: 'left', grid: { color: 'rgba(229,238,246,.7)' }, title: { display: true, text: 'Output / Unit Cost' } },
+                    y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Delivered Output' } }
+                },
+                plugins: { legend: { display: true, position: 'bottom' } }
+            }
+        });
+    }
+
+    function aggregateFirmCSV(rows) {
+        // Expect columns: Tick, FirmID, ..., AvgUC, OutDeliv, Output, ...
+        const byTick = new Map();
+        rows.forEach(r => {
+            const t = r.Tick;
+            if (!byTick.has(t)) byTick.set(t, { count: 0, out: 0, uc: 0, deliv: 0 });
+            const g = byTick.get(t);
+            const toNum = v => (v == null || v === '' ? 0 : Number(v));
+            g.count += 1;
+            g.out += toNum(r.Output);
+            g.uc += toNum(r.AvgUC);
+            g.deliv += toNum(r.OutDeliv);
+        });
+        const labels = Array.from(byTick.keys()).sort((a,b)=>Number(a)-Number(b));
+        const outputAvg = labels.map(t => {
+            const g = byTick.get(t); return g.count > 0 ? g.out / g.count : 0;
+        });
+        const ucAvg = labels.map(t => {
+            const g = byTick.get(t); return g.count > 0 ? g.uc / g.count : 0;
+        });
+        const delivAvg = labels.map(t => {
+            const g = byTick.get(t); return g.count > 0 ? g.deliv / g.count : 0;
+        });
+        return { labels, datasets: [
+            { label: 'Avg Output per Firm', data: outputAvg, borderColor: '#2ecc71', backgroundColor: 'transparent', tension: .2, yAxisID: 'y' },
+            { label: 'Avg Unit Cost', data: ucAvg, borderColor: '#e67e22', backgroundColor: 'transparent', tension: .2, yAxisID: 'y' },
+            { label: 'Avg Delivered Output', data: delivAvg, borderColor: '#3498db', backgroundColor: 'transparent', tension: .2, yAxisID: 'y1' }
+        ]};
+    }
+
+    // Fetch the explicit timestamped CSV; fallback to embedded JSON
+    fetch(SAMPLE_FIRMS_PRODUCTION_CSV, { cache: 'no-store', mode: 'cors', credentials: 'same-origin' })
+        .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); })
+        .then(text => parseCSV(text))
+        .then(rows => render(aggregateFirmCSV(rows)))
+        .catch(() => {
+            // Fallback: embedded JSON payload
+            let dataEl = document.querySelector('.firm-data');
+            if (!dataEl) {
+                const detailPages = document.querySelectorAll('.detail-page');
+                for (const page of detailPages) {
+                    dataEl = page.querySelector('.firm-data');
+                    if (dataEl) break;
+                }
+            }
+            if (!dataEl) return;
+            try {
+                const payload = JSON.parse(dataEl.textContent);
+                render({
+                    labels: payload.labels,
+                    datasets: [
+                        { label: 'Avg Output per Firm', data: payload.series.OutputAvg, borderColor: '#2ecc71', backgroundColor: 'transparent', tension: .2, yAxisID: 'y' },
+                        { label: 'Avg Unit Cost', data: payload.series.AvgUCAvg, borderColor: '#e67e22', backgroundColor: 'transparent', tension: .2, yAxisID: 'y' },
+                        { label: 'Avg Delivered Output', data: payload.series.OutDelivAvg, borderColor: '#3498db', backgroundColor: 'transparent', tension: .2, yAxisID: 'y1' }
+                    ]
+                });
+            } catch(_) {}
         });
 }
 

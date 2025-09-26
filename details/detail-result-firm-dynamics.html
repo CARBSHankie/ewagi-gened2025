@@ -25,6 +25,15 @@
             </ul>
         </div>
         <div class="detail-section">
+            <h3>Simulation Results</h3>
+            <div style="height:240px;background:#fff;border:1px solid rgba(52,152,219,.25);border-radius:8px;padding:8px">
+                <canvas class="firm-chart"></canvas>
+            </div>
+            <!-- Local data payload for optional interactive chart (used only if Chart.js is available locally). Using class to avoid duplicate IDs in modals. -->
+            <script class="firm-data" type="application/json">{"labels":["0","1","2","3","4","5"],"series":{"OutputAvg":[0,51439.04,56267.97,44190.80,46730.40,309.44],"AvgUCAvg":[0,21.13,18.31,13.65,14.61,4.02],"OutDelivAvg":[0,53105.38,40557.30,28180.46,31378.49,309.44]}}</script>
+            <noscript><div class="label" style="margin-top:8px;color:#64748b">JavaScript disabled: interactive chart unavailable.</div></noscript>
+        </div>
+        <div class="detail-section">
             <h3>Technology Adoption</h3>
             <p>Innovation and technology integration</p>
             <ul class="detail-list">
